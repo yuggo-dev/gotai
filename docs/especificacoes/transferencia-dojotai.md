@@ -1,64 +1,58 @@
-﻿# Especificação: transferência entre Dojotais
+# Especificação: transferência entre Dojotais
 
-> Status: rascunho inicial. Este documento registra as regras discutidas para transferência de uma pessoa entre sedes. Pontos ainda indefinidos estão listados ao final.
+> Status: fluxo principal e regras de notificação definidos. A matriz de permissões continua em aberto.
 
 ## Objetivo
 
-Permitir que uma pessoa vinculada a um Dojotai seja transferida para outro, com validação pelas duas sedes, atribuição de novo vínculo organizacional e preservação do histórico.
+Transferir uma pessoa entre Dojotais com validação das duas sedes, atribuição de novo vínculo organizacional e preservação do histórico.
 
 ## Atores
 
-- **Taityo da sede atual:** inicia a solicitação e, depois da aceitação da sede de destino, reconfirma a transferência.
-- **Taityo da sede de destino:** aceita a solicitação e pode definir o novo Buntai e os cargos.
-- **Pessoa com permissão na sede de destino:** pode definir o novo Buntai e os cargos se essa etapa for delegada a alguém autorizado.
-- **Pessoa em transferência:** permanece vinculada à sede atual até a conclusão do processo.
-
-## Regras
-
-1. A transferência é iniciada pelo Taityo da sede atual; a pessoa em transferência não a inicia diretamente.
-2. A solicitação é enviada a um Dojotai de destino.
-3. O Taityo da sede de destino precisa aceitar a solicitação.
-4. Depois da aceitação, o Taityo da sede atual precisa reconfirmar e confirmar a saída.
-5. Após as confirmações, o novo Buntai e os cargos são definidos pelo Taityo da sede de destino ou por outra pessoa com permissão para essa atribuição. Essa etapa pode ficar pendente.
-6. A transferência só se conclui depois que o novo Buntai e os cargos forem atribuídos.
-7. Enquanto a transferência não estiver concluída, a pessoa continua vinculada à sede atual e usa normalmente a comunidade dessa sede.
-8. Qualquer um dos dois Taityos envolvidos — da sede atual ou da sede de destino — pode cancelar a transferência enquanto ela estiver pendente.
-9. As permissões são próprias de cada Dojotai. As permissões da sede atual não são presumidas na sede de destino.
-10. Os registros anteriores de práticas e publicações permanecem acessíveis na sede de destino após a transferência. A sede atual conserva o histórico do período em que a pessoa esteve vinculada a ela.
-11. O histórico deve registrar a transferência e as mudanças de vínculo, cargos ou categorias quando esses dados estiverem disponíveis.
+- **Taityo da sede atual:** inicia a transferência e, após o aceite do destino, reconfirma e confirma a saída.
+- **Taityo da sede de destino:** aceita ou recusa a solicitação e garante a atribuição do novo vínculo.
+- **Pessoa autorizada na sede de destino:** pode definir o novo Buntai e os cargos quando essa tarefa lhe for delegada.
+- **Pessoa em transferência:** permanece vinculada à sede atual até a conclusão.
 
 ## Fluxo principal
 
-1. O Taityo da sede atual inicia uma transferência e indica o Dojotai de destino.
-2. O Taityo da sede de destino analisa e aceita a solicitação.
-3. O Taityo da sede atual reconfirma e confirma a saída.
-4. O Taityo da sede de destino atribui o novo Buntai e os cargos ou delega essa atribuição a outra pessoa autorizada.
-5. Quando as atribuições forem concluídas, a pessoa passa a pertencer ao Dojotai de destino e a transferência é concluída.
+1. O Taityo da sede atual inicia a transferência e indica o Dojotai de destino.
+2. O Taityo do destino aceita ou recusa a solicitação.
+3. Se o destino aceitar, o Taityo atual reconfirma a decisão e confirma a saída.
+4. O Taityo do destino, ou pessoa autorizada por ele, atribui o novo Buntai e os cargos. Essa etapa pode permanecer pendente.
+5. Depois da atribuição do Buntai e dos cargos, a transferência é concluída e a pessoa passa a pertencer ao Dojotai de destino.
 
-## Cancelamento
+## Regras
 
-Enquanto a transferência estiver pendente, o Taityo da sede atual ou o Taityo da sede de destino pode cancelá-la. Até a conclusão, o vínculo da pessoa continua sendo com a sede atual.
+1. Só o Taityo da sede atual inicia a transferência; a pessoa não a inicia diretamente.
+2. O Taityo da sede de destino precisa aceitar antes da reconfirmação do Taityo atual.
+3. A categoria atual da pessoa é mantida automaticamente.
+4. O novo Buntai e os novos cargos precisam ser atribuídos antes da conclusão.
+5. Até a conclusão, a pessoa continua vinculada à sede atual e usa normalmente sua comunidade.
+6. Qualquer um dos dois Taityos envolvidos pode cancelar enquanto a transferência estiver pendente.
+7. A transferência não tem prazo automático; fica pendente até alguém agir ou cancelá-la.
+8. Se o destino recusar, a solicitação é encerrada e a pessoa e os Taityos são avisados.
+9. As permissões são próprias de cada Dojotai e não são presumidas nem copiadas para a sede de destino.
 
-## Histórico e dados
+## Histórico após a transferência
 
-- O histórico de práticas e publicações acompanha a pessoa e pode ser consultado também na sede de destino.
-- A sede atual mantém o registro histórico do vínculo anterior.
-- A transferência e mudanças de cargo ou categoria devem ser registradas quando as informações estiverem disponíveis.
+- A sede atual mantém o histórico do período em que a pessoa esteve vinculada a ela.
+- Práticas antigas podem ser consultadas na sede de destino somente por quem receber permissão explícita daquele Dojotai. O Taityo tem acesso mestre.
+- Publicações antigas podem ser vistas por toda a comunidade do destino no perfil/histórico da pessoa; não voltam a aparecer no feed da nova sede.
+- A transferência e mudanças de vínculo, cargos ou categoria devem compor o histórico quando aplicável.
 
-## Critérios de aceitação iniciais
+## Notificações
 
-- Uma transferência só pode ser iniciada pelo Taityo da sede atual.
-- A transferência não avança para a confirmação final sem a aceitação do Taityo da sede de destino.
-- Depois da aceitação do destino, o Taityo da sede atual precisa reconfirmar e confirmar a saída.
-- Um Taityo de qualquer uma das duas sedes pode cancelar enquanto a transferência estiver pendente.
-- A pessoa continua na sede atual e mantém acesso à comunidade atual até a conclusão.
-- A transferência não se conclui enquanto o novo Buntai e os cargos estiverem sem atribuição.
-- Depois da conclusão, os registros anteriores podem ser vistos na sede de destino e permanecem no histórico da sede atual.
+- Os Taityos recebem notificação quando uma etapa pendente exige ação deles.
+- A pessoa transferida recebe notificação somente na conclusão, recusa ou cancelamento.
+- As notificações aparecem dentro do app e podem ser enviadas por push se a pessoa permitir.
 
-## Decisões em aberto
+## Critérios de aceitação
 
-- O que ocorre se o Taityo da sede de destino recusar a solicitação.
-- Se há prazo para cada etapa e o que ocorre quando uma etapa fica sem resposta.
-- Quais notificações são enviadas aos Taityos e à pessoa em transferência em cada etapa.
-- Como apresentar as permissões da sede de destino durante a atribuição do novo Buntai e dos cargos.
-- Como registrar e tratar a categoria durante uma transferência.
+- Só o Taityo da sede atual consegue iniciar a transferência.
+- Sem aceite do destino, a transferência não avança para a reconfirmação da sede atual.
+- A pessoa continua na sede atual até o novo Buntai e os cargos serem atribuídos e a transferência ser concluída.
+- A categoria é mantida durante a transferência.
+- Qualquer Taityo das duas sedes pode cancelar enquanto estiver pendente.
+- Não existe expiração automática por falta de resposta.
+- Recusa encerra a solicitação e notifica a pessoa e os Taityos.
+- O histórico de práticas e publicações segue as regras de visibilidade descritas acima.

@@ -6,10 +6,15 @@ A identidade do projeto busca transmitir espiritualidade, acolhimento e simplici
 
 ## Documentação
 
-- [Contexto inicial](docs/contexto-inicial.md)
-- [Especificação de transferência entre Dojotais](docs/especificacoes/transferencia-dojotai.md)
+- [Contexto do produto](docs/contexto-inicial.md)
+- [Escopo do MVP](docs/especificacoes/mvp.md)
+- [Entrada, cadastro e perfis](docs/especificacoes/entrada-e-perfis.md)
+- [Permissões e visibilidade](docs/especificacoes/permissoes.md)
+- [Práticas, streaks e pódios](docs/especificacoes/praticas-e-podios.md)
+- [Feeds, eventos e notificações](docs/especificacoes/feeds-e-eventos.md)
+- [Transferência entre Dojotais](docs/especificacoes/transferencia-dojotai.md)
 
 ## Estado do projeto
 
-O projeto está na fase de definição de contexto e requisitos. Decisões ainda em aberto estão registradas nos documentos de especificação.
+O projeto está na fase de definição e consolidação de requisitos. O escopo funcional inicial está documentado; matriz completa de permissões, fórmula dos pódios e alguns detalhes operacionais continuam pendentes. Ainda não há implementação de produto.
 
