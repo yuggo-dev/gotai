@@ -1,0 +1,438 @@
+@media (max-width: 800px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding-top: 24px;
+  }
+  .hero-mark {
+    min-height: 240px;
+  }
+  .sun-ring {
+    width: 185px;
+    height: 185px;
+  }
+  .sun-ring span {
+    font-size: 56px;
+  }
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+  .feature-card {
+    min-height: 190px;
+  }
+  .admin-layout {
+    grid-template-columns: 1fr;
+  }
+  .welcome-panel {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .member-badge {
+    align-items: flex-start;
+  }
+  .member-sidebar {
+    width: 214px;
+    flex-basis: 214px;
+  }
+  .member-page-wrap {
+    padding-inline: 22px;
+  }
+  .desktop-feedbar {
+    left: 214px;
+  }
+}
+@media (max-width: 540px) {
+  .topbar {
+    height: 64px;
+    padding-inline: 17px;
+  }
+  .topnav {
+    gap: 14px;
+    font-size: 12px;
+  }
+  .dojo-label {
+    display: none;
+  }
+  .page-wrap {
+    width: min(100% - 28px, 1140px);
+    padding-top: 30px;
+  }
+  .form-row,
+  .approval-fields {
+    grid-template-columns: 1fr;
+  }
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .invite-result {
+    grid-template-columns: 1fr;
+  }
+  .profile-strip {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .profile-strip div {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .panel {
+    padding: 16px;
+  }
+  .member-shell {
+    display: block;
+  }
+  .member-sidebar {
+    display: none;
+  }
+  .member-page-wrap {
+    width: auto;
+    padding: 28px 15px 100px;
+  }
+  .desktop-feedbar {
+    display: none;
+  }
+  .mobile-nav {
+    position: fixed;
+    z-index: 20;
+    inset: auto 0 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 7px 5px max(8px, env(safe-area-inset-bottom));
+    border-top: 1px solid #dfe4da;
+    background: rgba(255, 254, 250, 0.97);
+    box-shadow: 0 -7px 24px rgba(26, 52, 37, 0.07);
+  }
+  .mobile-nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    min-height: 48px;
+    color: #7a887d;
+  }
+  .mobile-nav-link span {
+    color: #829083;
+    font-size: 19px;
+    line-height: 1;
+  }
+  .mobile-nav-link small {
+    font-size: 9px;
+  }
+  .mobile-nav-link.active,
+  .mobile-nav-link.active span {
+    color: var(--green);
+    font-weight: 700;
+  }
+  .profile-hero {
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .profile-avatar {
+    flex-basis: 66px;
+    width: 66px;
+    height: 66px;
+    font-size: 27px;
+  }
+  .profile-hero h1 {
+    font-size: 30px;
+  }
+  .section-title-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .practice-cell {
+    width: 17px;
+    height: 17px;
+  }
+  .heading-with-action {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .creation-actions {
+    width: 100%;
+  }
+  .creation-actions .button {
+    flex: 1;
+    padding-inline: 10px;
+  }
+  .creation-card,
+  .post-composer,
+  .social-post,
+  .practice-calendar-card,
+  .practice-day-card {
+    padding: 15px;
+  }
+  .calendar-grid {
+    gap: 3px;
+  }
+  .calendar-day {
+    aspect-ratio: 1;
+    font-size: 11px;
+  }
+  .calendar-day > i {
+    bottom: 3px;
+  }
+  .calendar-legend {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    line-height: 1.5;
+  }
+  .summary-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .edit-profile-button {
+    padding: 8px 10px;
+    font-size: 10px;
+    white-space: nowrap;
+  }
+  .event-detail {
+    padding-left: 18px;
+  }
+  .org-delegate-form {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .org-position-card {
+    width: min(100%, 360px);
+  }
+  .org-position-children {
+    margin-left: 12px;
+    padding-left: 13px;
+  }
+}
+
+@media (max-width: 800px) {
+  .info-post-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .info-post-media,
+  .info-media-placeholder {
+    min-height: 200px;
+  }
+  .info-post-copy h2 {
+    font-size: 22px;
+  }
+  .profile-page {
+    max-width: 700px;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "hero" "summary" "edit" "status" "pubs";
+  }
+  .profile-page {
+    padding-right: 0;
+  }
+  .profile-page .publications-section {
+    min-height: 0;
+  }
+  .profile-page .profile-practices-section {
+    margin-top: 18px;
+  }
+  .practice-page-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 540px) {
+  .content-card.info-post {
+    gap: 14px;
+    padding: 15px;
+  }
+  .info-post-author span {
+    font-size: 10px;
+  }
+  .info-post-heading {
+    align-items: flex-start;
+  }
+  .featured-info-time {
+    padding: 8px 9px;
+  }
+  .featured-info-time strong {
+    font-size: 11px;
+  }
+  .info-post-media,
+  .info-media-placeholder {
+    min-height: 165px;
+  }
+  .content-card.info-post .info-post-description {
+    font-size: 13px;
+  }
+  .public-home-content {
+    padding-top: 10px;
+  }
+  .public-home-shell .hero-grid {
+    min-height: auto;
+    padding-bottom: 34px;
+  }
+  .public-home-shell .hero-mark {
+    min-height: 190px;
+  }
+  .home-logo {
+    width: min(230px, 65vw);
+    margin-bottom: 10px;
+  }
+  .public-home-shell .sun-ring {
+    width: 125px;
+    height: 125px;
+    margin-bottom: 15px;
+  }
+  .public-home-shell .sun-ring span {
+    font-size: 42px;
+  }
+
+  .member-mobile-topbar {
+    position: sticky;
+    z-index: 12;
+    top: 0;
+    display: flex;
+    height: 58px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: #123b2c;
+  }
+  .member-mobile-topbar img {
+    display: block;
+    width: 116px;
+    height: 50px;
+    object-fit: contain;
+  }
+  .member-mobile-topbar button {
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 9px;
+    background: rgba(255, 255, 255, 0.06);
+    color: #f3e5a8;
+    font-size: 20px;
+  }
+  .member-sidebar {
+    position: fixed;
+    z-index: 22;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    width: min(84vw, 300px);
+    height: 100dvh;
+    padding: 18px 16px max(16px, env(safe-area-inset-bottom));
+    overflow-y: auto;
+    transform: translateX(-105%);
+    transition: transform 0.2s ease;
+    box-shadow: 12px 0 34px rgba(0, 0, 0, 0.22);
+  }
+  .member-sidebar.drawer-open {
+    transform: translateX(0);
+  }
+  .member-sidebar-backdrop {
+    position: fixed;
+    z-index: 21;
+    inset: 0;
+    display: block;
+    border: 0;
+    background: rgba(0, 0, 0, 0.48);
+  }
+  .sidebar-feedbar {
+    margin-top: auto;
+  }
+  .sidebar-utilities {
+    margin-top: 24px;
+  }
+  .member-shell {
+    display: block;
+  }
+  .member-page-wrap {
+    width: auto;
+    padding: 24px 15px 90px;
+  }
+  .mobile-feedbar {
+    position: fixed;
+    z-index: 15;
+    inset: auto 0 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 8px 12px max(10px, env(safe-area-inset-bottom));
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    background: #123b2c;
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.16);
+  }
+  .mobile-feed-link {
+    display: flex;
+    min-height: 46px;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.035);
+    color: #e0e8de;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .mobile-feed-link span {
+    display: grid;
+    place-items: center;
+    color: #f0d771;
+    font-size: 20px;
+  }
+  .mobile-feed-link.active {
+    border-color: rgba(245, 221, 126, 0.75);
+    background: linear-gradient(135deg, #f1d978, #d5b14f);
+    box-shadow: 0 4px 16px rgba(213, 177, 79, 0.2);
+    color: #173c2b;
+  }
+  .mobile-feed-link.active span {
+    color: #173c2b;
+  }
+  .profile-page {
+    grid-template-areas: "hero" "summary" "edit" "status" "pubs";
+    row-gap: 0;
+  }
+  .profile-page .profile-hero {
+    padding-top: 10px;
+  }
+  .profile-page .profile-edit-form {
+    grid-column: 1;
+  }
+  .profile-page .publications-section {
+    padding: 18px;
+  }
+  .profile-page .publications-section {
+    margin-top: 18px;
+    padding: 18px;
+  }
+  .profile-page .profile-practices-section {
+    margin-top: 18px;
+    padding: 18px;
+  }
+  .profile-page {
+    padding-right: 0;
+  }
+  .profile-fullname {
+    font-size: 17px;
+  }
+  .profile-description {
+    font-size: 14px;
+  }
+  .summary-row {
+    font-size: 13px;
+  }
+  .practice-cell {
+    width: 19px;
+    height: 19px;
+  }
+  .practice-page-grid {
+    grid-template-columns: 1fr;
+  }
+  .practice-page-grid .practice-calendar-card,
+  .practice-page-grid .practice-day-card {
+    height: auto;
+  }
+}

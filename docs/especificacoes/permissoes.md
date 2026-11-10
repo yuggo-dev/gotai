@@ -21,17 +21,21 @@
 - Publicar avisos no feed de informações.
 - Moderar publicações e comentários: ocultar ou remover conteúdo.
 - Configurar pesos de práticas para o pódio geral.
+- Criar e editar o organograma do Dojotai.
 - Registrar comparecimento em um evento.
 - Editar ou cancelar eventos para pessoas autorizadas naquele evento.
 - Atribuir categoria, cargo e Buntai durante entrada ou transferência.
 
 A lista identifica ações mencionadas até aqui; ainda não é a matriz final nem define quais cargos recebem cada permissão.
 
+O Taityo pode administrar o organograma e delegar essa permissão a outras pessoas. A delegação deve ser explícita; ocupar um cargo no organograma não concede automaticamente permissão para editá-lo.
+
 ## Regras de visibilidade definidas
 
 - Publicações sociais: toda a comunidade do Dojotai.
 - Dados de contato: privados por padrão; o Dojotai concede acesso por cargo/vínculo ou pessoa.
 - Práticas detalhadas: privadas por padrão; o Dojotai concede acesso por cargo/vínculo ou pessoa.
+- Uma publicação social que referencia uma prática divulga apenas a prática e a data escolhidas pela própria pessoa. Essa escolha explícita não libera o restante do histórico detalhado.
 - Placar de pódios e streaks: toda a comunidade. A exibição do histórico detalhado permanece sujeita às permissões de práticas.
 - Convites em análise: dados cadastrais visíveis somente a quem pode aprovar.
 - Evento: o criador escolhe se a visibilidade é para toda a sede ou só para o público-alvo. Só o público-alvo pode responder à presença.

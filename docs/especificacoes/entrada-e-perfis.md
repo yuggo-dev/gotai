@@ -30,11 +30,11 @@ O público principal tem de 10 a 38 anos. O Taityo pode aprovar exceções. Soli
 
 ## Perfil e visibilidade
 
-O perfil apresenta nome, username com `@`, foto e descrição, quando disponíveis. A própria pessoa pode editar nome, username, descrição e foto. O username permanece único e é exibido com `@`. E-mail e telefone não ficam visíveis para a comunidade por padrão; o Dojotai configura acesso por cargo/vínculo e pessoa. O Taityo mantém acesso mestre.
+O perfil, intitulado **Meu Perfil**, apresenta nome, username com `@`, foto e descrição, quando disponíveis. A própria pessoa pode editar nome, username, descrição e foto. O username permanece único e é exibido com `@`. E-mail e telefone não ficam visíveis para a comunidade por padrão; o Dojotai configura acesso por cargo/vínculo e pessoa. O Taityo mantém acesso mestre.
 
 O histórico de práticas aparece em uma grade visual por prática, com dez quadrados correspondentes aos últimos dez dias. Um quadrado preenchido indica que a prática foi registrada naquele dia. Essa grade é somente visual: não permite registrar, alterar ou remover práticas e não exibe detalhes ao toque. O registro e a correção acontecem exclusivamente na aba Práticas. Se a pessoa visitante não tiver permissão para ver as práticas, a seção inteira fica oculta.
 
-As publicações aparecem abaixo do resumo de práticas. A pessoa pode iniciar uma publicação pelo botão de criação no Feed Social; a publicação também aparece em seu perfil.
+Em telas grandes, Meu Perfil e o resumo visual de práticas ficam empilhados em uma coluna, ao lado das publicações em uma segunda coluna. Em celulares, as três seções ficam empilhadas nesta ordem: Meu Perfil, resumo de práticas e publicações. A pessoa pode iniciar uma publicação pelo botão de criação no Feed Social; a publicação também aparece em seu perfil.
 
 Cada pessoa pertence a um único Dojotai por vez. Não há mecanismo de seguir ou adicionar integrantes individualmente.
 

@@ -1,0 +1,44 @@
+/* Identidade da página inicial */
+.public-home-shell {
+  background: #0e3326;
+  color: #f5f3e9;
+}
+.public-home-shell .topbar {
+  background: #0e3326;
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+.public-home-shell .brand img {
+  width: 180px;
+  height: 70px;
+}
+.public-home-content {
+  padding-top: 26px;
+}
+.public-home-shell .hero-copy h1 {
+  color: #fffdf6;
+}
+.public-home-shell .hero-copy .eyebrow {
+  color: #e6c94e;
+}
+.public-home-shell .hero-copy .lead {
+  color: #c7d2c7;
+}
+.public-home-shell .helper-text {
+  color: #d1dacd;
+}
+.public-home-shell .hero-actions .button-primary {
+  background: #d5b14f;
+  color: #173c2b;
+}
+.public-home-shell .hero-mark {
+  color: #c1cbbc;
+}
+.home-logo {
+  width: min(290px, 72vw);
+  height: auto;
+  margin-bottom: 20px;
+  object-fit: contain;
+}
+.public-home-shell .site-footer {
+  color: #afbdaf;
+}

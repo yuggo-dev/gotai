@@ -11,10 +11,12 @@ Entregar uma comunidade digital de um Dojotai que permita entrada aprovada, perf
 1. Cadastro e entrada em um Dojotai por convite de uso único e aprovação.
 2. Perfil com dados básicos e visibilidade controlada para informações sensíveis.
 3. Feed social com texto, fotos, áudio e vídeo combináveis, curtidas e comentários.
-4. Feed de informações com avisos e eventos publicados por pessoas autorizadas.
+4. Feed de informações com avisos e eventos que podem combinar texto, fotos, áudio e vídeo, publicados por pessoas autorizadas.
 5. Registro diário de práticas, histórico com permissões, streaks e pódios semanais e mensais.
 6. Eventos com público-alvo, visibilidade, respostas de presença, registro de comparecimento e lembretes.
-7. Notificações dentro do app e push quando a pessoa permitir.
+7. Organograma do Dojotai configurável por pessoas autorizadas pelo Taityo.
+8. Publicação social com referência opcional a uma prática que a própria pessoa registrou e escolheu compartilhar.
+9. Notificações dentro do app e push quando a pessoa permitir.
 
 ## Escopo a confirmar
 
@@ -33,6 +35,7 @@ Entregar uma comunidade digital de um Dojotai que permita entrada aprovada, perf
 - Cada Dojotai configura suas próprias permissões. Acesso concedido por um Dojotai não acompanha a pessoa quando ela é transferida.
 - Publicações sociais são visíveis para toda a comunidade do Dojotai.
 - Histórico detalhado de práticas e dados de contato seguem permissões configuradas pelo Dojotai.
+- Compartilhar uma prática cria uma publicação social nova, com referência explícita à prática e à data selecionadas; isso não é repost e não torna público o restante do histórico.
 
 ## Critério de conclusão do escopo
 

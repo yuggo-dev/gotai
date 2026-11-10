@@ -27,15 +27,20 @@ A categoria é distinta de cargo e Buntai. Na entrada, a pessoa autorizada que a
 - **Shotaityo:** nível ao qual Buntaityos podem estar vinculados.
 - **Fukutaityo:** cargo ligado ao Taityo; pode receber o vínculo dos Buntaityos quando não há Shotaityo.
 - **Taityo:** responsável master do Dojotai.
-- **Shomu:** função de escritório e administração, também ligada ao Dojotai.
+- **Shomu:** função de escritório e administração, associada a um Buntai.
 
-Uma pessoa pode ocupar mais de um cargo. A estrutura descrita admite Buntaityo → Shotaityo → Fukutaityo → Taityo; Buntaityo → Shotaityo → Taityo; e Buntaityo → Fukutaityo → Taityo. Cada Buntai pertence a um único Dojotai. Cada sede mantém seu próprio organograma.
+Uma pessoa pode ocupar mais de um cargo. A estrutura descrita admite Buntaityo → Shotaityo → Fukutaityo → Taityo; Buntaityo → Shotaityo → Taityo; e Buntaityo → Fukutaityo → Taityo. Cada Buntai pertence a um único Dojotai. Cada sede mantém seu próprio organograma. Shomu pertence a um Buntai; sua posição hierárquica continua em aberto.
+
+O organograma é construído por atribuições organizacionais explícitas, com cargo, pessoa, Buntai quando aplicável e vínculo com a posição superior. A estrutura não deve inferir uma única cadeia fixa: cada Buntaityo pode se vincular ao Shotaityo, ao Fukutaityo ou diretamente ao Taityo conforme a organização da sede. Fukubuntaityos ficam associados ao Buntaityo do próprio Buntai. Uma pessoa com mais de um cargo pode ocupar mais de uma posição no organograma. Shomu fica associado a um Buntai; sua posição hierárquica específica ainda precisa ser definida.
+
+A edição e manutenção do organograma cabem ao Taityo e a pessoas às quais ele delegar essa permissão.
 
 ## Especificações
 
 - [Escopo do MVP](especificacoes/mvp.md)
 - [Entrada, cadastro e perfis](especificacoes/entrada-e-perfis.md)
 - [Permissões e visibilidade](especificacoes/permissoes.md)
+- [Organograma do Dojotai](especificacoes/organograma.md)
 - [Práticas, streaks e pódios](especificacoes/praticas-e-podios.md)
 - [Feeds, eventos e notificações](especificacoes/feeds-e-eventos.md)
 - [Transferência entre Dojotais](especificacoes/transferencia-dojotai.md)
@@ -46,18 +51,20 @@ O nome do aplicativo é **goTAI**. A logo enviada pelo usuário é a referência
 
 ### Navegação e áreas do protótipo
 
-- Usar a imagem `apps/web/public/gotai.png` como logo da área autenticada.
-- Aplicar verde escuro como cor principal e amarelo da logo como cor de destaque.
+- Usar a logo atual `apps/web/public/gotai.png` na página inicial e na área autenticada.
+- Usar verde escuro como cor de fundo principal e amarelo da logo como cor de destaque.
 - Após o login, abrir o Feed Informativo por padrão; manter o Feed Social em uma área separada.
-- Em telas grandes, usar navegação lateral à esquerda. Em celulares, usar barra fixa inferior.
-- A navegação principal reúne Informativo, Social, Práticas, Organograma e Perfil.
-- O registro de práticas acontece na aba Práticas, que inclui um calendário. No Perfil, os últimos dez dias são um resumo visual, sem controles de registro nem interação com os quadrados.
-- O perfil permite à própria pessoa alterar nome, username, descrição e foto.
+- Em telas grandes, usar sidebar à esquerda. No topo fica o cartão **Meu Perfil**; abaixo ficam **Minhas Práticas** e **Organograma**.
+- Na base da sidebar fica uma barra horizontal com os acessos **Informativo** e **Social**. Em celulares, essa barra fica fixa na parte inferior da tela; Meu Perfil, Minhas Práticas e Organograma ficam disponíveis em um menu lateral recolhível.
+- O organograma apresenta a estrutura de cargos e Buntai configurada para o Dojotai.
+- **Meu Perfil** permite à própria pessoa alterar nome, username, descrição e foto. Em telas grandes, perfil e resumo de práticas ficam empilhados em uma coluna, ao lado das publicações; em celulares, perfil, resumo e publicações ficam empilhados nessa ordem.
+- O registro de práticas acontece em **Minhas Práticas**, com calendário e lista de práticas lado a lado em telas grandes e empilhados em celulares. No perfil, os últimos dez dias são um resumo visual, sem controles de registro nem interação com os quadrados.
 - Ações de criação aparecem como botões nas áreas correspondentes e respeitam as permissões: criar publicação no Social; criar aviso e evento no Informativo.
 
 ## Pendências gerais
 
 - Completar a matriz de permissões por ação, recurso, cargo, vínculo organizacional e pessoa.
 - Definir todos os detalhes do organograma e como as relações entre cargos e Buntai são configuradas por sede.
+- Definir como o Shomu se conecta hierarquicamente às demais posições e se posições podem ficar sem pessoa atribuída.
 - Fechar critérios de pontuação e edição dos pesos dos pódios além das regras já registradas na especificação de práticas.
 - Definir detalhes operacionais ainda listados nas especificações, como a combinação de vários filtros de público de evento.

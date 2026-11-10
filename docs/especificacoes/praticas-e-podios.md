@@ -13,9 +13,12 @@ A pessoa registra as próprias práticas. Frequência na Sede também é autodec
 
 ## Registro e histórico
 
-- A navegação principal tem uma aba própria chamada **Práticas**. O registro não é feito no Perfil.
-- A aba Práticas inclui um calendário mensal. Ao selecionar uma data editável, a pessoa vê as práticas e pode marcar ou desmarcar cada uma para aquele dia.
+- A navegação tem uma área própria chamada **Minhas Práticas**. O registro não é feito no Perfil.
+- Minhas Práticas inclui um calendário mensal e a lista de práticas. Em telas grandes, calendário e lista ficam lado a lado; em celulares, ficam empilhados, com o calendário primeiro.
+- Ao selecionar uma data editável no calendário, a pessoa vê as práticas e pode marcar ou desmarcar cada uma para aquele dia.
 - O calendário pode mostrar registros anteriores como histórico; somente hoje e os dois dias anteriores podem ser lançados, corrigidos ou removidos. Datas futuras e datas fora desse prazo não permitem edição.
+- Depois de registrar ou consultar uma prática, a pessoa pode escolher **Compartilhar no Social**. Isso abre uma nova publicação com a referência à prática selecionada; nada é publicado sem confirmação explícita.
+- A publicação divulga apenas a prática e a data escolhidas, não o histórico completo. Se o registro for removido depois, o post publicado permanece como contexto compartilhado e pode ser removido separadamente.
 - O registro é uma marcação de que a prática foi feita em um dia, sem quantidade ou duração.
 - A pessoa pode registrar o dia atual e lançar registros de até dois dias anteriores.
 - A pessoa pode corrigir ou remover um registro até dois dias depois da data da prática.
