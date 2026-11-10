@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   RiChatSmile3Line,
-  RiGridLine,
+  RiHandHeartFill,
   RiLogoutBoxRLine,
+  RiMegaphoneFill,
   RiMenuLine,
-  RiNewspaperLine,
   RiNodeTree,
   RiSettings3Line,
   RiUser3Line,
@@ -14,11 +14,10 @@ import type { IconType } from "react-icons";
 import { useAuth } from "../app/auth";
 
 const feedLinks = [
-  { to: "/", label: "Informativo", icon: RiNewspaperLine },
+  { to: "/", label: "Avisos", icon: RiMegaphoneFill },
   { to: "/social", label: "Social", icon: RiChatSmile3Line },
 ];
 const sidebarLinks = [
-  { to: "/praticas", label: "Minhas Práticas", icon: RiGridLine },
   { to: "/organograma", label: "Organograma", icon: RiNodeTree },
 ];
 
@@ -35,12 +34,12 @@ export function MemberNavigation() {
   return (
     <>
       <div className="member-mobile-topbar">
-        <Link to="/" aria-label="goTAI — Informativo">
-          <img src="/gotai.png" alt="goTAI" />
-        </Link>
         <button onClick={() => setDrawerOpen(true)} aria-label="Abrir menu">
           <RiMenuLine aria-hidden="true" />
         </button>
+        <Link to="/" aria-label="goTAI — Avisos">
+          <img src="/gotai.png" alt="goTAI" />
+        </Link>
       </div>
       {drawerOpen && (
         <button
@@ -135,23 +134,42 @@ export function MemberNavigation() {
         ))}
       </nav>
       <nav className="mobile-feedbar" aria-label="Feeds">
-        {feedLinks.map((item) => (
-          <Link
-            key={item.to}
-            to={item.to}
-            aria-current={location.pathname === item.to ? "page" : undefined}
-            className={
-              location.pathname === item.to
-                ? "mobile-feed-link active"
-                : "mobile-feed-link"
-            }
-          >
-            <span>
-              <NavIcon icon={item.icon} />
-            </span>
-            {item.label}
-          </Link>
-        ))}
+        <Link
+          to="/"
+          aria-current={location.pathname === "/" ? "page" : undefined}
+          className={
+            location.pathname === "/"
+              ? "mobile-feed-link active"
+              : "mobile-feed-link"
+          }
+        >
+          <span>
+            <RiMegaphoneFill aria-hidden="true" />
+          </span>
+          Avisos
+        </Link>
+        <Link
+          to="/perfil/desempenho?registrar=1"
+          className="mobile-practice-action"
+          aria-label="Registrar práticas"
+          title="Registrar práticas"
+        >
+          <RiHandHeartFill aria-hidden="true" />
+        </Link>
+        <Link
+          to="/social"
+          aria-current={location.pathname === "/social" ? "page" : undefined}
+          className={
+            location.pathname === "/social"
+              ? "mobile-feed-link active"
+              : "mobile-feed-link"
+          }
+        >
+          <span>
+            <RiChatSmile3Line aria-hidden="true" />
+          </span>
+          Social
+        </Link>
       </nav>
     </>
   );

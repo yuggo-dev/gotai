@@ -26,6 +26,23 @@ export function InformationalPage() {
     location: "",
   });
   const [media, setMedia] = useState<MediaDraft[]>([]);
+  useEffect(() => {
+    if (!formType) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const closeOnEscape = (keyboardEvent: KeyboardEvent) => {
+      if (keyboardEvent.key === "Escape" && !busy) {
+        setFormType(null);
+        setMedia([]);
+        setError("");
+      }
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [formType, busy]);
   const load = useCallback(async () => {
     try {
       setData(await api<InfoFeedData>("/api/informativo"));
@@ -44,6 +61,12 @@ export function InformationalPage() {
     } catch (e) {
       setError((e as Error).message);
     }
+  }
+  function closeComposer() {
+    if (busy) return;
+    setFormType(null);
+    setMedia([]);
+    setError("");
   }
   async function submit(eventForm: FormEvent) {
     eventForm.preventDefault();
@@ -84,7 +107,7 @@ export function InformationalPage() {
       <div className="content-heading heading-with-action">
         <div>
           <p className="eyebrow">{session.membership.dojotaiName}</p>
-          <h1>Informativo</h1>
+          <h1>Avisos</h1>
           <p className="lead">
             Avisos e atividades importantes do seu Dojotai.
           </p>
@@ -95,6 +118,7 @@ export function InformationalPage() {
               className="button button-quiet-light"
               onClick={() => {
                 setMedia([]);
+                setError("");
                 setFormType(formType === "notice" ? null : "notice");
               }}
             >
@@ -105,6 +129,7 @@ export function InformationalPage() {
             className="button button-primary"
             onClick={() => {
               setMedia([]);
+              setError("");
               setFormType(formType === "event" ? null : "event");
             }}
           >
@@ -113,112 +138,136 @@ export function InformationalPage() {
         </div>
       </div>
       {formType && (
-        <form className="creation-card" onSubmit={(e) => void submit(e)}>
-          <div className="section-title-row">
-            <h2>
-              {formType === "notice" ? "Novo aviso" : "Novo evento"}
+        <div
+          className="creation-modal-backdrop"
+          onClick={(clickEvent) => {
+            if (clickEvent.target === clickEvent.currentTarget) closeComposer();
+          }}
+        >
+          <form
+            className="creation-card creation-modal"
+            onSubmit={(e) => void submit(e)}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="creation-modal-title"
+          >
+            <header className="creation-modal-header">
+              <div>
+                <p className="eyebrow">Publicação no Informativo</p>
+                <h2 id="creation-modal-title">
+                  {formType === "notice" ? "Novo aviso" : "Novo evento"}
+                </h2>
+              </div>
               <button
                 type="button"
                 className="close-button"
-                onClick={() => {
-                  setFormType(null);
-                  setMedia([]);
-                }}
-                aria-label="Fechar"
+                onClick={closeComposer}
+                aria-label="Fechar janela"
+                disabled={busy}
               >
                 ×
               </button>
-            </h2>
-          </div>
-          {formType === "notice" ? (
-            <>
-              <Field label="Título">
-                <input
-                  required
-                  maxLength={120}
-                  value={notice.title}
-                  onChange={(e) =>
-                    setNotice({ ...notice, title: e.target.value })
-                  }
-                />
-              </Field>
-              <Field label="Mensagem">
-                <textarea
-                  rows={4}
-                  maxLength={4000}
-                  value={notice.body}
-                  onChange={(e) =>
-                    setNotice({ ...notice, body: e.target.value })
-                  }
-                />
-              </Field>
-            </>
-          ) : (
-            <>
-              <Field label="Nome do evento">
-                <input
-                  required
-                  maxLength={120}
-                  value={event.title}
-                  onChange={(e) =>
-                    setEvent({ ...event, title: e.target.value })
-                  }
-                />
-              </Field>
-              <div className="form-row">
-                <Field label="Data e horário">
+            </header>
+            {formType === "notice" ? (
+              <>
+                <Field label="Título">
                   <input
-                    type="datetime-local"
                     required
-                    value={event.startsAt}
+                    maxLength={120}
+                    value={notice.title}
                     onChange={(e) =>
-                      setEvent({ ...event, startsAt: e.target.value })
+                      setNotice({ ...notice, title: e.target.value })
                     }
                   />
                 </Field>
-                <Field label="Local">
+                <Field label="Mensagem">
+                  <textarea
+                    rows={4}
+                    maxLength={4000}
+                    value={notice.body}
+                    onChange={(e) =>
+                      setNotice({ ...notice, body: e.target.value })
+                    }
+                  />
+                </Field>
+              </>
+            ) : (
+              <>
+                <Field label="Nome do evento">
                   <input
-                    maxLength={200}
-                    value={event.location}
+                    required
+                    maxLength={120}
+                    value={event.title}
                     onChange={(e) =>
-                      setEvent({ ...event, location: e.target.value })
+                      setEvent({ ...event, title: e.target.value })
                     }
                   />
                 </Field>
-              </div>
-              <Field label="Descrição">
-                <textarea
-                  rows={3}
-                  maxLength={4000}
-                  value={event.description}
-                  onChange={(e) =>
-                    setEvent({ ...event, description: e.target.value })
-                  }
-                />
-              </Field>
-              <p className="muted">
-                Protótipo: evento visível para integrantes ativos do Dojotai.
-              </p>
-            </>
-          )}
-          <MediaAttachmentControls
-            items={media}
-            onRemove={(index) =>
-              setMedia((current) =>
-                current.filter((_, itemIndex) => itemIndex !== index),
-              )
-            }
-            onSelect={(files) => void addMedia(files)}
-          />
-          {error && <ErrorMessage>{error}</ErrorMessage>}
-          <button className="button button-primary" disabled={busy}>
-            {busy
-              ? "Publicando…"
-              : formType === "notice"
-                ? "Publicar aviso"
-                : "Publicar evento"}
-          </button>
-        </form>
+                <div className="form-row">
+                  <Field label="Data e horário">
+                    <input
+                      type="datetime-local"
+                      required
+                      value={event.startsAt}
+                      onChange={(e) =>
+                        setEvent({ ...event, startsAt: e.target.value })
+                      }
+                    />
+                  </Field>
+                  <Field label="Local">
+                    <input
+                      maxLength={200}
+                      value={event.location}
+                      onChange={(e) =>
+                        setEvent({ ...event, location: e.target.value })
+                      }
+                    />
+                  </Field>
+                </div>
+                <Field label="Descrição">
+                  <textarea
+                    rows={3}
+                    maxLength={4000}
+                    value={event.description}
+                    onChange={(e) =>
+                      setEvent({ ...event, description: e.target.value })
+                    }
+                  />
+                </Field>
+                <p className="muted">
+                  Protótipo: evento visível para integrantes ativos do Dojotai.
+                </p>
+              </>
+            )}
+            <MediaAttachmentControls
+              items={media}
+              onRemove={(index) =>
+                setMedia((current) =>
+                  current.filter((_, itemIndex) => itemIndex !== index),
+                )
+              }
+              onSelect={(files) => void addMedia(files)}
+            />
+            {error && <ErrorMessage>{error}</ErrorMessage>}
+            <div className="creation-modal-actions">
+              <button
+                type="button"
+                className="button button-quiet-light"
+                onClick={closeComposer}
+                disabled={busy}
+              >
+                Cancelar
+              </button>
+              <button className="button button-primary" disabled={busy}>
+                {busy
+                  ? "Publicando…"
+                  : formType === "notice"
+                    ? "Publicar aviso"
+                    : "Publicar evento"}
+              </button>
+            </div>
+          </form>
+        </div>
       )}
       {error && !formType && <ErrorMessage>{error}</ErrorMessage>}
       {hasItems ? (

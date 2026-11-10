@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { AuthProvider, useAuth } from "./app/auth";
 import { MemberNavigation } from "./layouts/MemberNavigation";
 import { Header, HomePage } from "./pages/public/HomePage";
@@ -49,7 +49,14 @@ function AppRoutes() {
             element={isMember ? <InformationalPage /> : <HomePage />}
           />
           <Route path="/social" element={<SocialPage />} />
-          <Route path="/praticas" element={<PracticesPage />} />
+          <Route
+            path="/praticas"
+            element={<Navigate to="/perfil/desempenho?registrar=1" replace />}
+          />
+          <Route
+            path="/perfil/desempenho"
+            element={<PracticesPage />}
+          />
           <Route path="/organograma" element={<OrganogramPage />} />
           <Route path="/perfil" element={<ProfilePage />} />
           <Route path="/entrar" element={<LoginPage />} />

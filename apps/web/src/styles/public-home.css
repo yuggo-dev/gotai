@@ -1,10 +1,20 @@
 /* Identidade da página inicial */
 .public-home-shell {
-  background: #0e3326;
+  background: linear-gradient(
+    125deg,
+    #061d15 0%,
+    #0b2d20 28%,
+    #123b2c 52%,
+    #174b35 76%,
+    #082319 100%
+  );
+  background-size: 300% 300%;
+  animation: app-green-gradient-drift 28s ease-in-out infinite;
   color: #f5f3e9;
 }
 .public-home-shell .topbar {
-  background: #0e3326;
+  background: rgba(10, 37, 27, 0.7);
+  backdrop-filter: blur(16px);
   border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 .public-home-shell .brand img {

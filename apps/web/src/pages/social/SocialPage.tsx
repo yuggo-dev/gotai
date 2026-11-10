@@ -60,14 +60,7 @@ export function SocialPage() {
     }
   }
   return (
-    <section className="member-content">
-      <div className="content-heading">
-        <div>
-          <p className="eyebrow">Comunidade</p>
-          <h1>Social</h1>
-          <p className="lead">Publicações das pessoas do seu Dojotai.</p>
-        </div>
-      </div>
+    <section className="member-content social-page">
       <form className="post-composer" onSubmit={(e) => void publish(e)}>
         <div className="composer-top">
           <div className="profile-avatar small-avatar">

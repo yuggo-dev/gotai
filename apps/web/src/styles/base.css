@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap");
 
 :root {
   font-family: "DM Sans", sans-serif;
@@ -13,6 +13,16 @@
   --ink: #213a2e;
   --muted: #6d7a70;
   --line: #e3e6dc;
+}
+
+@keyframes app-green-gradient-drift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 * {
@@ -49,6 +59,23 @@ button:disabled {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background: linear-gradient(
+    125deg,
+    #061d15 0%,
+    #0b2d20 28%,
+    #123b2c 52%,
+    #174b35 76%,
+    #082319 100%
+  );
+  background-size: 300% 300%;
+  animation: app-green-gradient-drift 28s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-shell {
+    animation: none;
+    background-position: 50% 50%;
+  }
 }
 .topbar {
   height: 76px;
@@ -139,17 +166,17 @@ p {
 }
 h1,
 h2 {
-  font-family: "Playfair Display", Georgia, serif;
+  font-family: "DM Sans", sans-serif;
   color: var(--green-deep);
 }
 h1 {
-  font-size: clamp(38px, 5vw, 58px);
+  font-size: clamp(32px, 4.2vw, 48px);
   line-height: 1.08;
   letter-spacing: -0.035em;
   margin-bottom: 20px;
 }
 h2 {
-  font-size: 28px;
+  font-size: 24px;
   line-height: 1.16;
   margin-bottom: 12px;
 }
@@ -159,7 +186,7 @@ h3 {
 }
 .lead {
   max-width: 570px;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.75;
   color: var(--muted);
 }
@@ -251,7 +278,7 @@ h3 {
 .sun-ring span {
   color: var(--green);
   font-size: 74px;
-  font-family: "Playfair Display", serif;
+  font-family: "DM Sans", sans-serif;
   font-weight: 500;
   z-index: 1;
 }
@@ -292,10 +319,10 @@ h3 {
   border: 1px solid #dce2d9;
   border-radius: 8px;
   background: #fff;
-  padding: 11px 12px;
+  padding: 10px 11px;
   color: var(--ink);
   outline: none;
-  font-size: 14px;
+  font-size: 13px;
 }
 .field input:focus,
 .field textarea:focus,

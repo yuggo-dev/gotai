@@ -1,13 +1,18 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
+import { RiArrowRightLine, RiPencilLine } from "react-icons/ri";
 import { api } from "../../lib/api";
 import { useAuth } from "../../app/auth";
 import { HomePage } from "../public/HomePage";
 import { ErrorMessage, Field } from "../../components/ui";
 import { SocialPostCard } from "../social/SocialPostCard";
 import type { SocialPost } from "../social/types";
-import { localDate, addDays, resizeImage } from "../../lib/format";
-import { practiceNames, type PracticeLog } from "../../lib/practices";
+import { localDate, addDays, formatDay, resizeImage } from "../../lib/format";
+import {
+  practiceIcons,
+  practiceNames,
+  type PracticeLog,
+} from "../../lib/practices";
 
 export function ProfilePage() {
   const { session, refresh } = useAuth();
@@ -37,10 +42,27 @@ export function ProfilePage() {
         .then((result) => setLogs(result.logs))
         .catch(() => undefined);
   }, [session]);
+  useEffect(() => {
+    if (!editing) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [editing]);
+  useEffect(() => {
+    if (!editing) return;
+    const closeOnEscape = (keyboardEvent: KeyboardEvent) => {
+      if (keyboardEvent.key === "Escape" && !busy) closeEditor();
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [editing, busy]);
   if (!session?.membership) return <HomePage />;
   const days = Array.from({ length: 10 }, (_, index) =>
-    addDays(localDate(), index - 9),
+    addDays(localDate(), -index),
   );
+  const roleLabel = session.membership.roles.join(", ") || "Integrante";
   async function chooseAvatar(file?: File) {
     if (!file) return;
     try {
@@ -69,6 +91,11 @@ export function ProfilePage() {
       setBusy(false);
     }
   }
+  function closeEditor() {
+    if (busy) return;
+    setEditing(false);
+    setError("");
+  }
   return (
     <section className="member-content profile-page">
       <div className="profile-hero">
@@ -80,9 +107,14 @@ export function ProfilePage() {
           )}
         </div>
         <div className="profile-title">
-          <p className="eyebrow">Seu espaço</p>
           <h1 className="profile-name-heading">{session.user.fullName}</h1>
-          <p className="profile-username">@{session.user.username}</p>
+          <p className="profile-username">
+            <span>@{session.user.username}</span>
+            <span className="profile-role-separator" aria-hidden="true">
+              |
+            </span>
+            <span className="profile-role">{roleLabel}</span>
+          </p>
           {session.user.description && (
             <p className="profile-description">{session.user.description}</p>
           )}
@@ -95,135 +127,170 @@ export function ProfilePage() {
         </div>
         <button
           className="button button-quiet-light edit-profile-button"
+          type="button"
+          aria-label="Editar perfil"
+          title="Editar perfil"
           onClick={() => {
-            setEditing((value) => !value);
+            setEditing(true);
+            setError("");
             setNotice("");
           }}
         >
-          Editar perfil
+          <RiPencilLine aria-hidden="true" focusable="false" />
         </button>
       </div>
       {notice && <p className="success-message">{notice}</p>}
       {editing && (
-        <form
-          className="creation-card profile-edit-form"
-          onSubmit={(e) => void saveProfile(e)}
+        <div
+          className="creation-modal-backdrop"
+          onClick={(clickEvent) => {
+            if (clickEvent.target === clickEvent.currentTarget) closeEditor();
+          }}
         >
-          <h2>Editar perfil</h2>
-          <Field label="Nome">
-            <input
-              required
-              minLength={2}
-              maxLength={120}
-              value={form.fullName}
-              onChange={(e) => setForm({ ...form, fullName: e.target.value })}
-            />
-          </Field>
-          <Field label="Username">
-            <div className="username-input">
-              <span>@</span>
+          <form
+            className="creation-card creation-modal profile-edit-form"
+            onSubmit={(e) => void saveProfile(e)}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="profile-edit-title"
+          >
+            <header className="creation-modal-header">
+              <div>
+                <p className="eyebrow">Seu espaço</p>
+                <h2 id="profile-edit-title">Editar perfil</h2>
+              </div>
+              <button
+                type="button"
+                className="close-button"
+                onClick={closeEditor}
+                aria-label="Fechar janela"
+                disabled={busy}
+              >
+                ×
+              </button>
+            </header>
+            <Field label="Nome">
               <input
                 required
-                minLength={3}
-                maxLength={24}
-                pattern="[A-Za-z0-9_.]+"
-                value={form.username}
-                onChange={(e) => setForm({ ...form, username: e.target.value })}
+                minLength={2}
+                maxLength={120}
+                value={form.fullName}
+                onChange={(e) => setForm({ ...form, fullName: e.target.value })}
               />
+            </Field>
+            <Field label="Username">
+              <div className="username-input">
+                <span>@</span>
+                <input
+                  required
+                  minLength={3}
+                  maxLength={24}
+                  pattern="[A-Za-z0-9_.]+"
+                  value={form.username}
+                  onChange={(e) =>
+                    setForm({ ...form, username: e.target.value })
+                  }
+                />
+              </div>
+            </Field>
+            <Field label="Descrição">
+              <textarea
+                rows={3}
+                maxLength={280}
+                value={form.description}
+                onChange={(e) =>
+                  setForm({ ...form, description: e.target.value })
+                }
+              />
+            </Field>
+            <Field label="Foto de perfil">
+              <input
+                type="file"
+                accept="image/png,image/jpeg,image/webp"
+                onChange={(e) => void chooseAvatar(e.target.files?.[0])}
+              />
+              <small>A imagem será redimensionada para o perfil.</small>
+            </Field>
+            {avatarDataUrl && (
+              <button
+                type="button"
+                className="text-button"
+                onClick={() => setAvatarDataUrl(null)}
+              >
+                Remover foto
+              </button>
+            )}
+            {error && <ErrorMessage>{error}</ErrorMessage>}
+            <div className="creation-modal-actions">
+              <button
+                type="button"
+                className="button button-quiet-light"
+                onClick={closeEditor}
+                disabled={busy}
+              >
+                Cancelar
+              </button>
+              <button className="button button-primary" disabled={busy}>
+                {busy ? "Salvando…" : "Salvar alterações"}
+              </button>
             </div>
-          </Field>
-          <Field label="Descrição">
-            <textarea
-              rows={3}
-              maxLength={280}
-              value={form.description}
-              onChange={(e) =>
-                setForm({ ...form, description: e.target.value })
-              }
-            />
-          </Field>
-          <Field label="Foto de perfil">
-            <input
-              type="file"
-              accept="image/png,image/jpeg,image/webp"
-              onChange={(e) => void chooseAvatar(e.target.files?.[0])}
-            />
-            <small>A imagem será redimensionada para o perfil.</small>
-          </Field>
-          {avatarDataUrl && (
-            <button
-              type="button"
-              className="text-button"
-              onClick={() => setAvatarDataUrl(null)}
-            >
-              Remover foto
-            </button>
-          )}
-          {error && <ErrorMessage>{error}</ErrorMessage>}
-          <div className="composer-actions">
-            <button
-              type="button"
-              className="button button-quiet-light"
-              onClick={() => setEditing(false)}
-            >
-              Cancelar
-            </button>
-            <button className="button button-primary" disabled={busy}>
-              {busy ? "Salvando…" : "Salvar alterações"}
-            </button>
-          </div>
-        </form>
+          </form>
+        </div>
       )}
       {error && !editing && <ErrorMessage>{error}</ErrorMessage>}
       <section className="profile-section profile-practices-section">
         <div className="section-title-row">
           <div>
-            <p className="eyebrow">Resumo visual</p>
-            <h2>Práticas · últimos 10 dias</h2>
+            <p className="eyebrow">Sua caminhada</p>
+            <h2>Práticas recentes</h2>
           </div>
-          <Link to="/praticas" className="text-link">
-            Ir para Minhas Práticas →
+          <Link to="/perfil/desempenho" className="profile-details-link">
+            Ver evolução <RiArrowRightLine aria-hidden="true" />
           </Link>
         </div>
-        <div className="profile-practice-summary">
-          {Object.entries(practiceNames).map(([key, label]) => (
-            <div className="summary-row" key={key}>
-              <span>{label}</span>
-              <div
-                className="practice-heatmap"
-                aria-label={`${label}: últimos dez dias`}
-              >
-                {days.map((date) => (
-                  <span
-                    key={date}
-                    className={
-                      logs.some(
-                        (log) => log.practiceKey === key && log.date === date,
-                      )
-                        ? "practice-cell filled"
-                        : "practice-cell"
-                    }
-                    aria-hidden="true"
-                  />
-                ))}
-              </div>
-            </div>
-          ))}
+        <div className="practice-recent-strip" aria-label="Práticas dos últimos dez dias">
+          {days.map((date, index) => {
+            const completed = Object.keys(practiceNames).filter((key) =>
+              logs.some((log) => log.practiceKey === key && log.date === date),
+            );
+
+            return (
+              <article className="practice-day-tile" key={date}>
+                <div className="practice-day-date">
+                  <strong>{index === 0 ? "Hoje" : formatDay(date)}</strong>
+                  {index === 0 && <small>{formatDay(date)}</small>}
+                </div>
+                <div className="practice-day-icons">
+                  {Object.entries(practiceNames).map(([key, label]) => {
+                    const PracticeIcon = practiceIcons[key];
+                    const done = completed.includes(key);
+
+                    return (
+                      <span
+                        className={
+                          done
+                            ? "practice-day-indicator completed"
+                            : "practice-day-indicator"
+                        }
+                        key={key}
+                      role="img"
+                        aria-label={`${label}: ${done ? "realizada" : "não realizada"}`}
+                        title={`${label}: ${done ? "realizada" : "não realizada"}`}
+                      >
+                        <PracticeIcon aria-hidden="true" focusable="false" />
+                      </span>
+                    );
+                  })}
+                </div>
+                <small className="practice-day-count">
+                  {completed.length} de {Object.keys(practiceNames).length}
+                </small>
+              </article>
+            );
+          })}
         </div>
-        <p className="heatmap-caption">
-          Visualização informativa. Use Minhas Práticas para registrar.
-        </p>
       </section>
       <section className="profile-section publications-section">
-        <div className="section-title-row">
-          <div>
-            <p className="eyebrow">Comunidade</p>
-            <h2>Histórico de publicações</h2>
-          </div>
-          <Link to="/social" className="text-link">
-            Abrir Feed Social →
-          </Link>
-        </div>
         <ProfilePublications />
       </section>
     </section>
