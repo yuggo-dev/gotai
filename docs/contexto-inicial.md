@@ -44,6 +44,17 @@ Uma pessoa pode ocupar mais de um cargo. A estrutura descrita admite Buntaityo �
 
 O nome do aplicativo é **goTAI**. A logo enviada pelo usuário é a referência visual. As cores percebidas são amarelo-dourado, branco e verde muito escuro. A identidade deve apoiar os valores de espiritualidade, acolhimento e simplicidade.
 
+### Navegação e áreas do protótipo
+
+- Usar a imagem `apps/web/public/gotai.png` como logo da área autenticada.
+- Aplicar verde escuro como cor principal e amarelo da logo como cor de destaque.
+- Após o login, abrir o Feed Informativo por padrão; manter o Feed Social em uma área separada.
+- Em telas grandes, usar navegação lateral à esquerda. Em celulares, usar barra fixa inferior.
+- A navegação principal reúne Informativo, Social, Práticas, Organograma e Perfil.
+- O registro de práticas acontece na aba Práticas, que inclui um calendário. No Perfil, os últimos dez dias são um resumo visual, sem controles de registro nem interação com os quadrados.
+- O perfil permite à própria pessoa alterar nome, username, descrição e foto.
+- Ações de criação aparecem como botões nas áreas correspondentes e respeitam as permissões: criar publicação no Social; criar aviso e evento no Informativo.
+
 ## Pendências gerais
 
 - Completar a matriz de permissões por ação, recurso, cargo, vínculo organizacional e pessoa.

@@ -1,0 +1,14 @@
+{
+  "name": "gotai",
+  "private": true,
+  "workspaces": [
+    "apps/api",
+    "apps/web"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev --workspace=@gotai/api",
+    "dev:web": "npm run dev --workspace=@gotai/web",
+    "typecheck:api": "npx tsc --noEmit -p apps/api/tsconfig.json",
+    "build:web": "npm run build --workspace=@gotai/web"
+  }
+}

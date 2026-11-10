@@ -8,6 +8,7 @@ A identidade do projeto busca transmitir espiritualidade, acolhimento e simplici
 
 - [Contexto do produto](docs/contexto-inicial.md)
 - [Escopo do MVP](docs/especificacoes/mvp.md)
+- [Arquitetura técnica inicial](docs/arquitetura-inicial.md)
 - [Entrada, cadastro e perfis](docs/especificacoes/entrada-e-perfis.md)
 - [Permissões e visibilidade](docs/especificacoes/permissoes.md)
 - [Práticas, streaks e pódios](docs/especificacoes/praticas-e-podios.md)

@@ -13,11 +13,16 @@ A pessoa registra as próprias práticas. Frequência na Sede também é autodec
 
 ## Registro e histórico
 
+- A navegação principal tem uma aba própria chamada **Práticas**. O registro não é feito no Perfil.
+- A aba Práticas inclui um calendário mensal. Ao selecionar uma data editável, a pessoa vê as práticas e pode marcar ou desmarcar cada uma para aquele dia.
+- O calendário pode mostrar registros anteriores como histórico; somente hoje e os dois dias anteriores podem ser lançados, corrigidos ou removidos. Datas futuras e datas fora desse prazo não permitem edição.
 - O registro é uma marcação de que a prática foi feita em um dia, sem quantidade ou duração.
 - A pessoa pode registrar o dia atual e lançar registros de até dois dias anteriores.
 - A pessoa pode corrigir ou remover um registro até dois dias depois da data da prática.
 - Após um registro válido ser criado, corrigido ou removido, streaks e pódios são recalculados automaticamente.
 - O histórico detalhado é visível conforme as permissões definidas pelo Dojotai. O Taityo tem acesso mestre.
+- No perfil, cada prática tem uma grade visual com os últimos dez dias: um quadrado por dia, preenchido quando há registro. É um resumo sem ações: os quadrados não abrem detalhes nem permitem registrar ou alterar práticas.
+- Para quem não tem permissão de leitura, a seção de práticas do perfil fica completamente oculta.
 
 ## Streaks
 
