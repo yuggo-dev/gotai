@@ -2,25 +2,20 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import { useAuth } from "../../app/auth";
 import { ErrorMessage } from "../../components/ui";
-import { MediaViewer, type MediaAsset } from "../../components/media";
+import { MediaViewer } from "../../components/media";
 import { api } from "../../lib/api";
 import { formatEventDate, formatTime, localDate } from "../../lib/format";
 import { HomePage } from "../public/HomePage";
+import { EventDetailsModal, type FeedEvent } from "../social/SocialPage";
 
-type ActivityEvent = {
-  id: string;
-  title: string;
-  description: string;
-  media: MediaAsset[];
-  startsAt: string;
-  location: string;
-};
+type ActivityEvent = FeedEvent;
 
 const weekdays = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
 
 export function ActivitiesPage() {
   const { session } = useAuth();
   const [events, setEvents] = useState<ActivityEvent[]>([]);
+  const [selectedEvent, setSelectedEvent] = useState<ActivityEvent | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [month, setMonth] = useState(() => localDate().slice(0, 7));
@@ -41,6 +36,19 @@ export function ActivitiesPage() {
   useEffect(() => {
     if (session?.membership) void load();
   }, [session, load]);
+  useEffect(() => {
+    if (!selectedEvent) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSelectedEvent(null);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [selectedEvent]);
 
   const monthDate = useMemo(() => new Date(`${month}-01T12:00:00Z`), [month]);
   const calendarDays = useMemo(() => {
@@ -50,12 +58,19 @@ export function ActivitiesPage() {
     ).getUTCDate();
     return [...Array(offset).fill(null), ...Array.from({ length: count }, (_, index) => index + 1)];
   }, [monthDate]);
+  const eventDateKey = (value: string) =>
+    new Intl.DateTimeFormat("en-CA", {
+      timeZone: "America/Campo_Grande",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).format(new Date(value));
   const eventDates = useMemo(
-    () => new Set(events.map((event) => event.startsAt.slice(0, 10))),
+    () => new Set(events.map((event) => eventDateKey(event.startsAt))),
     [events],
   );
-  const selectedEvents = events
-    .filter((event) => event.startsAt.slice(0, 10) === selectedDate)
+  const upcomingEvents = events
+    .filter((event) => Date.parse(event.startsAt) >= Date.now())
     .sort((a, b) => Date.parse(a.startsAt) - Date.parse(b.startsAt));
   const monthLabel = new Intl.DateTimeFormat("pt-BR", {
     month: "long",
@@ -72,16 +87,23 @@ export function ActivitiesPage() {
     setSelectedDate(`${nextMonth}-01`);
   }
 
+  function openEvent(event: ActivityEvent) {
+    const date = eventDateKey(event.startsAt);
+    setMonth(date.slice(0, 7));
+    setSelectedDate(date);
+    setSelectedEvent(event);
+  }
+
   return (
     <section className="member-content activities-page">
       <header className="activities-heading">
         <p className="eyebrow">Agenda da comunidade</p>
-        <h1>Atividades</h1>
-        <p>Consulte os eventos e atividades programados para sua sede.</p>
+        <h1>Agenda</h1>
+        <p>Eventos e atividades programados para sua sede.</p>
       </header>
 
       {error && <ErrorMessage>{error}</ErrorMessage>}
-      <section className="activities-calendar" aria-label="Calendário de atividades">
+      <section className="activities-calendar" aria-label="Calendário da agenda">
         <div className="activities-calendar-header">
           <h2>{monthLabel}</h2>
           <div>
@@ -107,7 +129,7 @@ export function ActivitiesPage() {
                 aria-pressed={selectedDate === date}
                 aria-label={`${day}${hasEvent ? ", há atividade" : ""}`}
               >
-                {day}
+                <span>{day}</span>
                 {hasEvent && <i aria-hidden="true" />}
               </button>
             );
@@ -116,24 +138,32 @@ export function ActivitiesPage() {
       </section>
 
       <section className="activities-list" aria-live="polite">
-        <h2>{selectedDate === localDate() ? "Hoje" : new Intl.DateTimeFormat("pt-BR", { dateStyle: "full", timeZone: "UTC" }).format(new Date(`${selectedDate}T12:00:00Z`))}</h2>
-        {loading ? <p>Carregando atividades…</p> : selectedEvents.length ? (
-          selectedEvents.map((event) => (
-            <article className="activity-event-card" key={event.id}>
-              <div className="activity-event-time">
-                <strong>{formatTime(event.startsAt)}</strong>
-                <span>{formatEventDate(event.startsAt)}</span>
-              </div>
-              <div className="activity-event-content">
-                <h3>{event.title}</h3>
-                {event.location && <p className="activity-event-location">{event.location}</p>}
-                {event.description && <p>{event.description}</p>}
-                {event.media.length > 0 && <MediaViewer items={event.media} />}
-              </div>
-            </article>
-          ))
-        ) : <p className="activities-empty">Nenhuma atividade nesta data.</p>}
+        <div className="activities-list-heading">
+          <h2>Próximas atividades</h2>
+          <span>{upcomingEvents.length}</span>
+        </div>
+        {loading ? <p>Carregando atividades…</p> : upcomingEvents.length ? (
+          upcomingEvents.map((event) => {
+            const poster = event.media.find((item) => item.kind === "image");
+            return (
+              <button className="activity-upcoming-card" key={event.id} type="button" onClick={() => openEvent(event)}>
+                <span className="activity-upcoming-cover">
+                  {poster ? <MediaViewer items={[poster]} altPrefix={event.title} /> : <span aria-hidden="true">go!TAI</span>}
+                </span>
+                <span className="activity-upcoming-copy">
+                  <strong>{event.title}</strong>
+                  <small>{event.location || "Dojotai"}</small>
+                </span>
+                <span className="activity-upcoming-date">
+                  <strong>{formatTime(event.startsAt)}</strong>
+                  <small>{formatEventDate(event.startsAt)}</small>
+                </span>
+              </button>
+            );
+          })
+        ) : <p className="activities-empty">Nenhuma atividade programada por enquanto.</p>}
       </section>
+      {selectedEvent && <EventDetailsModal event={selectedEvent} onClose={() => setSelectedEvent(null)} />}
     </section>
   );
 }

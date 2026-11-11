@@ -34,6 +34,24 @@ A pessoa registra as próprias práticas. Frequência na Sede também é autodec
 - Portanto, Okiyome sozinho conta para a streak individual de Okiyome, mas não para a streak geral.
 - Pódios e streaks são visíveis para toda a comunidade do Dojotai.
 
+## Lembretes de registro
+
+- O MVP envia um lembrete diário às 20h, no horário local da pessoa, para registrar as práticas do dia.
+- O lembrete deixa de ser enviado naquele dia depois que a pessoa registrar Okiyome e pelo menos mais uma prática, que é também o requisito diário da streak geral.
+- O lembrete aparece dentro do app e pode ser enviado por push se a pessoa permitir.
+- A notificação oferece um atalho para abrir a janela de registro de práticas do dia atual.
+
+## Metas individuais sugeridas
+
+- O MVP pode sugerir metas semanais individuais para Okiyome e Frequência na Sede. As metas são desafios pessoais, não regras obrigatórias.
+- A semana da meta vai de segunda a domingo, em alinhamento com o pódio semanal.
+- Para sugerir a meta, o sistema calcula a média semanal de cada prática separadamente, usando as quatro semanas completas anteriores. A semana em andamento não entra no cálculo.
+- A sugestão aumenta gradualmente o ritmo habitual em uma ocorrência: arredonda a média para um número inteiro e acrescenta uma ocorrência.
+- A meta de Okiyome tem teto de sete dias na semana. A meta de Frequência na Sede tem teto de três vezes na semana; se a média já estiver nesse teto ou acima dele, a sugestão será manter o teto, sem propor aumento.
+- Se ainda não houver quatro semanas completas de histórico, a pessoa informa sua frequência habitual e disponibilidade para que o sistema gere uma sugestão inicial.
+- As metas sugeridas são privadas por padrão. A própria pessoa pode escolher compartilhá-las.
+- A pessoa pode aceitar, ajustar ou dispensar a sugestão. Metas e progresso não alteram streaks nem pontuação ou posição nos pódios.
+
 ## Pódios
 
 - Pódio individual para cada prática e pódio geral.

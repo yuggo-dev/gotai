@@ -1,49 +1,86 @@
-.activities-page {
-  display: grid;
-  gap: 22px;
-  max-width: 850px;
-}
+.activities-page { display: grid; gap: 20px; max-width: 850px; }
 .activities-heading h1 { margin: 0; font-size: 28px; }
-.activities-heading > p:last-child { margin: 7px 0 0; color: var(--text-muted); }
-.activities-calendar,
-.activities-list {
-  padding: 20px;
-  border: 1px solid rgba(var(--gold-rgb), 0.16);
-  border-radius: 18px;
-  background: var(--green-card);
-  box-shadow: 0 12px 34px rgba(var(--green-shadow-rgb), 0.16);
+.activities-heading > p:last-child { margin: 7px 0 0; color: #bdcbbf; font-size: 13px; }
+.activities-calendar, .activities-list {
+  padding: 20px; border: 1px solid rgba(var(--gold-rgb), 0.16); border-radius: 18px;
+  background: var(--green-card); box-shadow: 0 12px 34px rgba(var(--green-shadow-rgb), 0.16);
 }
-.activities-calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-.activities-calendar-header h2,
-.activities-list > h2 { margin: 0; color: var(--text-strong); font-size: 18px; text-transform: capitalize; }
-.activities-calendar-header > div { display: flex; gap: 8px; }
+.activities-calendar-header {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin-bottom: 15px; padding: 10px 12px;
+  border: 1px solid rgba(var(--gold-rgb), 0.2); border-radius: 15px;
+  background: linear-gradient(105deg, rgba(var(--gold-rgb), 0.14), rgba(var(--gold-rgb), 0.035));
+}
+.activities-calendar-header h2 {
+  margin: 0; color: var(--gold-bright); font-size: clamp(21px, 4vw, 25px);
+  font-weight: 800; letter-spacing: -0.025em; text-transform: capitalize;
+  text-shadow: 0 2px 14px rgba(var(--gold-rgb), 0.18);
+}
+.activities-calendar-header > div { display: flex; gap: 6px; }
 .activities-calendar-header button {
-  display: grid; width: 36px; height: 36px; place-items: center;
-  border: 1px solid rgba(var(--gold-rgb), 0.28); border-radius: 50%;
-  background: var(--green); color: var(--gold-bright); font-size: 22px; cursor: pointer;
+  display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid rgba(var(--gold-rgb), 0.2);
+  border-radius: 50%; background: rgba(255, 255, 255, 0.045); color: var(--gold-bright); font-size: 22px; cursor: pointer;
 }
 .activities-calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px; }
-.activities-weekday { padding: 7px 0; color: var(--text-muted); text-align: center; font-size: 12px; font-weight: 700; }
-.activities-calendar-day,
-.activities-calendar-empty { position: relative; display: grid; min-height: 44px; place-items: center; }
-.activities-calendar-day { border: 1px solid transparent; border-radius: 12px; background: transparent; color: var(--text-strong); cursor: pointer; }
+.activities-weekday { padding: 7px 0; color: #9eafa1; text-align: center; font-size: 11px; font-weight: 700; }
+.activities-calendar-day, .activities-calendar-empty { position: relative; display: grid; min-height: 42px; place-items: center; }
+.activities-calendar-day {
+  border: 1px solid transparent; border-radius: 12px; background: transparent; color: #dce5dc; font-size: 13px; cursor: pointer;
+}
 .activities-calendar-day:hover { background: rgba(var(--gold-rgb), 0.1); }
-.activities-calendar-day.selected { border-color: var(--gold); background: var(--gold); color: var(--ink-strong); font-weight: 800; }
-.activities-calendar-day i { position: absolute; bottom: 5px; width: 5px; height: 5px; border-radius: 50%; background: var(--gold-bright); }
-.activities-calendar-day.selected i { background: var(--ink-strong); }
-.activities-list { display: grid; gap: 15px; }
-.activity-event-card { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 16px; padding: 14px 0; border-top: 1px solid rgba(var(--gold-rgb), 0.15); }
-.activity-event-time { display: grid; align-content: start; gap: 4px; color: var(--gold-bright); font-size: 12px; }
-.activity-event-time strong { font-size: 16px; }
-.activity-event-content h3 { margin: 0; color: var(--text-strong); font-size: 16px; }
-.activity-event-content p { margin: 6px 0 0; color: var(--text-muted); font-size: 13px; line-height: 1.5; }
-.activity-event-location { color: var(--gold-bright) !important; }
-.activity-event-content .media-viewer { margin-top: 12px; }
-.activities-empty { margin: 0; padding: 10px 0 2px; color: var(--text-muted); font-size: 14px; }
-
+.activities-calendar-day.selected { border-color: rgba(var(--gold-rgb), 0.35); background: rgba(var(--gold-rgb), 0.1); }
+.activities-calendar-day.has-event {
+  min-height: 46px;
+  border: 2px solid var(--gold);
+  background: var(--gold);
+  color: var(--ink-strong); font-size: 14px; font-weight: 800;
+  box-shadow: 0 3px 13px rgba(var(--gold-rgb), 0.24);
+}
+.activities-calendar-day.has-event i {
+  position: absolute; bottom: 3px; width: 7px; height: 7px; border: 1px solid rgba(23, 60, 43, 0.35); border-radius: 50%;
+  background: var(--ink-strong);
+}
+.activities-calendar-day.selected.has-event { border-color: #fff0a3; background: var(--gold-bright); box-shadow: 0 0 0 3px rgba(var(--gold-bright-rgb), 0.22), 0 5px 16px rgba(var(--gold-rgb), 0.36); }
+.activities-list { display: grid; gap: 12px; }
+.activities-list-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
+.activities-list-heading h2 { margin: 0; color: #fffdf6; font-size: 17px; }
+.activities-list-heading > span {
+  display: grid; min-width: 24px; height: 24px; place-items: center; padding: 0 6px;
+  border-radius: 99px; background: rgba(var(--gold-rgb), 0.15); color: var(--gold-bright); font-size: 10px; font-weight: 700;
+}
+.activity-upcoming-card {
+  display: grid; width: 100%; min-width: 0; grid-template-columns: 82px minmax(0, 1fr) auto; align-items: center;
+  gap: 12px; padding: 8px; border: 1px solid rgba(255, 255, 255, 0.07); border-left: 3px solid var(--gold);
+  border-radius: 15px; background: rgba(255, 255, 255, 0.045); color: inherit; text-align: left; cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+.activity-upcoming-card:hover { transform: translateY(-2px); border-color: rgba(var(--gold-rgb), 0.42); background: rgba(var(--gold-rgb), 0.07); }
+.activity-upcoming-cover {
+  display: grid; width: 82px; height: 64px; overflow: hidden; place-items: center; border-radius: 10px;
+  background: var(--green-media); color: var(--gold-bright); font-size: 13px; font-weight: 800;
+}
+.activity-upcoming-cover .post-media { display: block; width: 100%; height: 100%; margin: 0; }
+.activity-upcoming-cover .post-media img { display: block; width: 100%; height: 100%; border-radius: 0; object-fit: cover; }
+.activity-upcoming-copy, .activity-upcoming-date { display: grid; min-width: 0; gap: 4px; }
+.activity-upcoming-copy strong { overflow: hidden; color: #f5f4eb; font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+.activity-upcoming-copy small { overflow: hidden; color: #b5c3b6; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.activity-upcoming-date {
+  justify-items: center; gap: 3px; padding: 7px 9px; border: 1px solid rgba(var(--gold-rgb), 0.5);
+  border-radius: 10px; background: var(--gold); color: var(--ink-strong); text-align: center; white-space: nowrap;
+}
+.activity-upcoming-date strong { color: var(--ink-strong); font-size: 12px; font-weight: 800; }
+.activity-upcoming-date small { color: var(--ink-strong); font-size: 10px; font-weight: 700; }
+.activities-empty { margin: 0; padding: 10px 0 2px; color: #b5c3b6; font-size: 13px; }
 @media (max-width: 540px) {
-  .activities-page { gap: 16px; }
-  .activities-calendar, .activities-list { padding: 16px; border-radius: 16px; }
-  .activities-calendar-day, .activities-calendar-empty { min-height: 40px; }
-  .activity-event-card { grid-template-columns: 58px minmax(0, 1fr); gap: 10px; }
+  .activities-page { gap: 15px; }
+  .activities-calendar, .activities-list { padding: 15px; border-radius: 16px; }
+  .activities-calendar-header { margin-bottom: 12px; padding: 9px 10px; }
+  .activities-calendar-header h2 { font-size: 21px; }
+  .activities-calendar-grid { gap: 3px; }
+  .activities-calendar-day, .activities-calendar-empty { min-height: 38px; }
+  .activities-calendar-day.has-event { min-height: 44px; }
+  .activity-upcoming-card { grid-template-columns: 68px minmax(0, 1fr) auto; gap: 9px; padding: 7px; }
+  .activity-upcoming-cover { width: 68px; height: 58px; }
+  .activity-upcoming-copy strong { font-size: 12px; }
+  .activity-upcoming-date strong { font-size: 11px; }
 }

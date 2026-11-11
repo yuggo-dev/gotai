@@ -113,7 +113,7 @@ type FeedNotice = {
   createdAt: string;
   author: FeedAuthor;
 };
-type FeedEvent = {
+export type FeedEvent = {
   id: string;
   title: string;
   description: string;
@@ -214,7 +214,7 @@ function EventCarouselCard({
   );
 }
 
-function EventDetailsModal({
+export function EventDetailsModal({
   event,
   onClose,
 }: {

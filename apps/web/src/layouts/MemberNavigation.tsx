@@ -25,7 +25,7 @@ const feedLinks = [
   { to: "/", label: "Início", icon: RiHome5Line },
 ];
 const sidebarLinks = [
-  { to: "/atividades", label: "Atividades", icon: RiCalendar2Line },
+  { to: "/agenda", label: "Agenda", icon: RiCalendar2Line },
   { to: "/organograma", label: "Organograma", icon: RiNodeTree },
 ];
 
@@ -193,11 +193,11 @@ export function MemberNavigation() {
           <RiHome5Line aria-hidden="true" />
         </Link>
         <Link
-          to="/atividades"
-          aria-current={location.pathname === "/atividades" ? "page" : undefined}
-          className={location.pathname === "/atividades" ? "mobile-dock-link active" : "mobile-dock-link"}
-          aria-label="Calendário de atividades"
-          title="Atividades"
+          to="/agenda"
+          aria-current={location.pathname === "/agenda" ? "page" : undefined}
+          className={location.pathname === "/agenda" ? "mobile-dock-link active" : "mobile-dock-link"}
+          aria-label="Agenda"
+          title="Agenda"
         >
           <RiCalendar2Line aria-hidden="true" />
         </Link>

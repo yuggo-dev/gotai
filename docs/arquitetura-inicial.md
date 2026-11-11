@@ -66,9 +66,12 @@ As Supabase Edge Functions usam runtime Deno, não são um servidor Fastify/Node
 ## Notificações e mídia
 
 - Na etapa Node/SQLite, manter notificações e arquivos atrás de interfaces próprias para que os provedores possam mudar.
+- Persistir notificações dentro do app como registros próprios, separados do envio de push; falha ou falta de permissão para push não deve apagar a notificação da central.
+- Gerar notificações de nova atividade para o público-alvo, não para todas as pessoas que apenas podem visualizar o evento.
+- Agendar lembrete diário de práticas às 20h no horário local da pessoa e não enviar quando ela já tiver registrado Okiyome e pelo menos mais uma prática naquele dia.
 - O destino planejado para mídia é Supabase Storage; o mecanismo temporário local ainda será decidido.
 - Push usa service worker e depende de permissão e suporte do navegador/dispositivo.
-- O agendamento dos lembretes de eventos deve ter um único responsável por etapa, evitando duplicidade entre worker Node e Supabase Cron.
+- O agendamento dos lembretes de eventos (24 horas e 1 hora antes) e de práticas deve ter um único responsável por etapa, evitando duplicidade entre worker Node e Supabase Cron.
 
 ## Próximas decisões técnicas
 

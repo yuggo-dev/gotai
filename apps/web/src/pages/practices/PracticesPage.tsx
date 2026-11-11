@@ -1,5 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type CSSProperties } from "react";
 import { useSearchParams } from "react-router-dom";
+import { RiArrowLeftSLine, RiArrowRightSLine, RiCheckLine } from "react-icons/ri";
+import { GiFlame } from "react-icons/gi";
 import { api } from "../../lib/api";
 import { useAuth } from "../../app/auth";
 import { HomePage } from "../public/HomePage";
@@ -29,6 +31,7 @@ export function PracticesPage() {
   const [logs, setLogs] = useState<PracticeLog[]>([]);
   const [today, setToday] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
+  const [calendarMonth, setCalendarMonth] = useState(() => localDate().slice(0, 7));
   const [encouragement, setEncouragement] = useState("");
   const [registerOpen, setRegisterOpen] = useState(
     searchParams.get("registrar") === "1",
@@ -70,42 +73,68 @@ export function PracticesPage() {
     return () => window.removeEventListener("keydown", closeOnEscape);
   }, [registerOpen, setSearchParams]);
   if (!session?.membership) return <HomePage />;
-  const selected = new Date(
-    `${selectedDate || today || localDate()}T12:00:00Z`,
-  );
-  const weekday = selected.getUTCDay();
-  const weekStart = new Date(selected);
-  weekStart.setUTCDate(selected.getUTCDate() - ((weekday + 6) % 7));
-  const weekDays = Array.from({ length: 7 }, (_, index) => {
-    const date = new Date(weekStart);
-    date.setUTCDate(weekStart.getUTCDate() + index);
-    return date.toISOString().slice(0, 10);
-  });
-  const currentWeekStart = (() => {
-    const current = new Date(`${today || localDate()}T12:00:00Z`);
-    current.setUTCDate(current.getUTCDate() - ((current.getUTCDay() + 6) % 7));
-    return current.toISOString().slice(0, 10);
-  })();
-  const earliestLogDate = logs.reduce(
-    (earliest, log) => (log.date < earliest ? log.date : earliest),
-    addDays(today || localDate(), -70),
-  );
-  const firstWeekStart = new Date(`${earliestLogDate}T12:00:00Z`);
-  firstWeekStart.setUTCDate(
-    firstWeekStart.getUTCDate() - ((firstWeekStart.getUTCDay() + 6) % 7),
-  );
-  const weekOptions: string[] = [];
-  for (
-    const week = new Date(firstWeekStart);
-    week.toISOString().slice(0, 10) <= currentWeekStart;
-    week.setUTCDate(week.getUTCDate() + 7)
-  ) {
-    weekOptions.push(week.toISOString().slice(0, 10));
-  }
-  weekOptions.reverse();
-  const selectedWeekStart = weekStart.toISOString().slice(0, 10);
+  const activeDate = selectedDate || today || localDate();
+  const viewedMonth = new Date(`${calendarMonth}-01T12:00:00Z`);
+  const monthDayCount = new Date(
+    Date.UTC(viewedMonth.getUTCFullYear(), viewedMonth.getUTCMonth() + 1, 0),
+  ).getUTCDate();
+  const monthOffset = (viewedMonth.getUTCDay() + 6) % 7;
+  const calendarDays: Array<string | null> = [
+    ...Array.from({ length: monthOffset }, () => null),
+    ...Array.from({ length: monthDayCount }, (_, index) =>
+      `${calendarMonth}-${String(index + 1).padStart(2, "0")}`,
+    ),
+  ];
   const editable = (date: string) =>
     Boolean(today && date <= today && date >= addDays(today, -2));
+  const registrationDates = [
+    today || localDate(),
+    addDays(today || localDate(), -1),
+    addDays(today || localDate(), -2),
+  ];
+  const practicesForDate = (date: string) =>
+    new Set(logs.filter((log) => log.date === date).map((log) => log.practiceKey));
+  const qualifiesForGeneralStreak = (date: string) => {
+    const dailyPractices = practicesForDate(date);
+    return dailyPractices.has("okiyome") && dailyPractices.size >= 2;
+  };
+  const currentStreakAnchor = qualifiesForGeneralStreak(today || localDate())
+    ? today || localDate()
+    : addDays(today || localDate(), -1);
+  let currentStreak = 0;
+  for (let cursor = currentStreakAnchor; qualifiesForGeneralStreak(cursor); cursor = addDays(cursor, -1)) {
+    currentStreak += 1;
+  }
+  let longestStreak = 0;
+  let runningStreak = 0;
+  const practiceDates = [...new Set(logs.map((log) => log.date))].sort();
+  let previousPracticeDate = "";
+  for (const date of practiceDates) {
+    if (qualifiesForGeneralStreak(date)) {
+      runningStreak = previousPracticeDate && addDays(previousPracticeDate, 1) === date
+        ? runningStreak + 1
+        : 1;
+      longestStreak = Math.max(longestStreak, runningStreak);
+      previousPracticeDate = date;
+    } else {
+      runningStreak = 0;
+      previousPracticeDate = "";
+    }
+  }
+  const monthLabel = new Intl.DateTimeFormat("pt-BR", {
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(viewedMonth);
+  function changeCalendarMonth(amount: number) {
+    const nextMonth = new Date(
+      Date.UTC(viewedMonth.getUTCFullYear(), viewedMonth.getUTCMonth() + amount, 1),
+    );
+    const monthKey = nextMonth.toISOString().slice(0, 7);
+    if (monthKey > (today || localDate()).slice(0, 7)) return;
+    setCalendarMonth(monthKey);
+    setSelectedDate(`${monthKey}-01`);
+  }
   async function togglePractice(practiceKey: string) {
     if (!selectedDate || !editable(selectedDate)) return;
     const performed = !logs.some(
@@ -150,79 +179,61 @@ export function PracticesPage() {
       </div>
       <div className="practice-page-grid history-mode">
         <section className="practice-calendar-card performance-calendar">
-            <div className="performance-date-heading">
-              <div>
-                <p className="eyebrow">
-                  {new Intl.DateTimeFormat("pt-BR", {
-                    month: "long",
-                    year: "numeric",
-                    timeZone: "UTC",
-                  }).format(selected)}
-                </p>
-                <h2>
-                  {selectedDate === today
-                    ? "Hoje"
-                    : formatLongDate(selectedDate)}
-                </h2>
-              </div>
-            </div>
-            <label className="performance-week-select">
-              <span>Semana</span>
-              <select
-                value={selectedWeekStart}
-                aria-label="Selecionar semana"
-                onChange={(event) => {
-                  const nextWeekStart = event.target.value;
-                  const nextWeekEnd = addDays(nextWeekStart, 6);
-                  setSelectedDate((current) =>
-                    current >= nextWeekStart && current <= nextWeekEnd
-                      ? current
-                      : nextWeekStart,
-                  );
-                }}
+            <div className="practice-month-heading">
+              <button type="button" onClick={() => changeCalendarMonth(-1)} aria-label="Mês anterior">
+                <RiArrowLeftSLine aria-hidden="true" />
+              </button>
+              <h2>{monthLabel}</h2>
+              <button
+                type="button"
+                onClick={() => changeCalendarMonth(1)}
+                disabled={calendarMonth >= (today || localDate()).slice(0, 7)}
+                aria-label="Próximo mês"
               >
-                {weekOptions.map((weekStartDate) => {
-                  const weekEndDate = addDays(weekStartDate, 6);
-                  const endLabel = new Intl.DateTimeFormat("pt-BR", {
-                    day: "2-digit",
-                    month: "short",
-                    timeZone: "UTC",
-                  }).format(new Date(`${weekEndDate}T12:00:00Z`));
-
-                  return (
-                    <option key={weekStartDate} value={weekStartDate}>
-                      {formatDay(weekStartDate)} – {endLabel}
-                    </option>
-                  );
-                })}
-              </select>
-            </label>
-            <div
-              className="performance-week-strip"
-              aria-label="Dias da semana"
-            >
-              {weekDays.map((date) => {
-                const dayName = new Intl.DateTimeFormat("pt-BR", {
-                  weekday: "short",
-                  timeZone: "UTC",
-                }).format(new Date(`${date}T12:00:00Z`));
-                const hasPractice = logs.some((log) => log.date === date);
-
+                <RiArrowRightSLine aria-hidden="true" />
+              </button>
+            </div>
+            <div className="practice-month-weekdays" aria-hidden="true">
+              {["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"].map((day) => <span key={day}>{day}</span>)}
+            </div>
+            <div className="practice-month-grid" aria-label="Calendário mensal de práticas">
+              {calendarDays.map((date, index) => {
+                if (!date) return <span className="practice-month-empty" key={`empty-${index}`} />;
+                const dayLogs = practicesForDate(date);
+                const count = dayLogs.size;
+                const complete = count === Object.keys(practiceNames).length;
+                const partial = count > 0 && !complete;
+                const level = count / Object.keys(practiceNames).length;
+                const disabled = date > (today || localDate());
                 return (
                   <button
+                    className={`practice-month-day${date === activeDate ? " selected" : ""}${date === today ? " today" : ""}${complete ? " complete" : partial ? " partial" : " empty"}`}
                     key={date}
-                    className={`${date === selectedDate ? "selected" : ""}${date === today ? " today" : ""}`}
+                    type="button"
                     onClick={() => setSelectedDate(date)}
-                    disabled={date > today}
-                    aria-label={`${dayName} ${formatDay(date)}${hasPractice ? ", com práticas registradas" : ""}`}
-                    aria-pressed={date === selectedDate}
+                    disabled={disabled}
+                    aria-label={`${formatLongDate(date)}: ${count} de ${Object.keys(practiceNames).length} práticas${complete ? ", completa" : partial ? ", parcial" : ", sem registros"}`}
+                    aria-pressed={date === activeDate}
+                    style={{ "--practice-level": level, "--practice-opacity": 0.3 + level * 0.7 } as CSSProperties}
                   >
-                    <span>{dayName.replace(".", "")}</span>
-                    <strong>{Number(date.slice(8, 10))}</strong>
-                    {hasPractice && <i aria-hidden="true" />}
+                    <span className="practice-month-day-number">{Number(date.slice(8, 10))}</span>
+                    <span className="practice-month-status">{count > 0 && <RiCheckLine aria-hidden="true" />}</span>
                   </button>
                 );
               })}
+            </div>
+            <div className="practice-month-legend">
+              <span><i className="partial" /> Parcial</span>
+              <span><i className="complete" /> Completa</span>
+              <span><i className="empty" /> Sem registro</span>
+            </div>
+            <div className="practice-streak-card">
+              <span className="practice-streak-flame"><GiFlame aria-hidden="true" /></span>
+              <div className="practice-streak-copy">
+                <strong>{currentStreak > 0 ? `${currentStreak} ${currentStreak === 1 ? "dia" : "dias"} de constância` : "Sua próxima sequência começa hoje"}</strong>
+                <p>{currentStreak > 0 ? "Okiyome e mais uma prática por dia. Continue assim!" : "Registre Okiyome e mais uma prática para iniciar sua streak geral."}</p>
+                <small>Maior sequência: {longestStreak} {longestStreak === 1 ? "dia" : "dias"}</small>
+              </div>
             </div>
           </section>
         <section className="practice-day-card">
@@ -308,17 +319,23 @@ export function PracticesPage() {
             <p className="practice-modal-description">
               Marque o que realizou hoje ou nos dois dias anteriores.
             </p>
-            <label className="practice-date-field">
+            <div className="practice-date-field">
               <span>Data da prática</span>
-              <input
-                type="date"
-                value={selectedDate}
-                min={today ? addDays(today, -2) : undefined}
-                max={today}
-                disabled={!today}
-                onChange={(event) => setSelectedDate(event.target.value)}
-              />
-            </label>
+              <div className="practice-date-options" role="group" aria-label="Escolher data da prática">
+                {registrationDates.map((date, index) => (
+                  <button
+                    className={selectedDate === date ? "selected" : ""}
+                    key={date}
+                    type="button"
+                    onClick={() => setSelectedDate(date)}
+                    aria-pressed={selectedDate === date}
+                  >
+                    <strong>{["Hoje", "Ontem", "Anteontem"][index]}</strong>
+                    <small>{formatDay(date)}</small>
+                  </button>
+                ))}
+              </div>
+            </div>
             <div className="practice-checklist">
               {Object.entries(practiceNames).map(([key, label]) => {
                 const done = logs.some(
@@ -327,32 +344,25 @@ export function PracticesPage() {
                 const PracticeIcon = practiceIcons[key];
 
                 return (
-                  <div className="practice-check-row" key={key}>
-                    <span className="practice-check-label">
-                      <PracticeIcon
-                        className="practice-stimulus-icon"
-                        aria-hidden="true"
-                        focusable="false"
-                      />
-                      <i
-                        className={
-                          done ? "practice-check checked" : "practice-check"
-                        }
-                      >
-                        {done ? "✓" : ""}
-                      </i>
-                      {label}
+                  <button
+                    className={`practice-check-row${done ? " checked" : ""}`}
+                    key={key}
+                    type="button"
+                    aria-pressed={done}
+                    aria-label={`${label}: ${done ? "registrada, toque para desfazer" : "não registrada, toque para marcar"}`}
+                    disabled={!editable(selectedDate)}
+                    onClick={() => void togglePractice(key)}
+                  >
+                    <i className={done ? "practice-check checked" : "practice-check"} aria-hidden="true">
+                      {done ? "✓" : ""}
+                    </i>
+                    <PracticeIcon className="practice-stimulus-icon" aria-hidden="true" focusable="false" />
+                    <span className="practice-task-copy">
+                      <strong>{label}</strong>
+                      <small>{done ? "Prática concluída · toque para desfazer" : "Toque para marcar como realizada"}</small>
                     </span>
-                    <button
-                      disabled={!editable(selectedDate)}
-                      className={
-                        done ? "practice-toggle done" : "practice-toggle"
-                      }
-                      onClick={() => void togglePractice(key)}
-                    >
-                      {done ? "Feita · desfazer" : "Marcar como feita"}
-                    </button>
-                  </div>
+                    <span className="practice-task-state">{done ? "Feita" : ""}</span>
+                  </button>
                 );
               })}
             </div>

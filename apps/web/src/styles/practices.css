@@ -91,6 +91,32 @@
   color: #fffdf6;
   color-scheme: dark;
 }
+.practice-date-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+}
+.practice-date-options button {
+  display: grid;
+  min-width: 76px;
+  gap: 3px;
+  padding: 7px 10px;
+  border: 1px solid rgba(236, 239, 222, 0.18);
+  border-radius: 10px;
+  background: var(--green);
+  color: #dce5dc;
+  text-align: center;
+  cursor: pointer;
+}
+.practice-date-options button strong { font-size: 11px; }
+.practice-date-options button small { color: #a9b6aa; font-size: 10px; }
+.practice-date-options button.selected {
+  border-color: rgba(var(--gold-rgb), 0.75);
+  background: rgba(var(--gold-rgb), 0.13);
+  color: var(--gold-bright);
+}
+.practice-date-options button.selected small { color: var(--gold-bright); }
 .practice-status {
   color: #acbbae;
   font-size: 12px;
@@ -326,21 +352,34 @@
 }
 .practice-check-row {
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   padding: 13px 0;
+  border: 0;
   border-top: 1px solid rgba(236, 239, 222, 0.11);
-}
-.practice-check-row > span {
-  display: flex;
-  align-items: center;
-  gap: 13px;
+  background: transparent;
   color: #eef0e7;
-  font-size: 15px;
+  text-align: left;
+  cursor: pointer;
 }
-.practice-check-row > .practice-check-label {
-  gap: 12px;
+.practice-check-row:disabled { cursor: not-allowed; opacity: 0.55; }
+.practice-check-row:not(:disabled):hover .practice-check { border-color: var(--gold-bright); }
+.practice-task-copy {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+  gap: 3px;
+}
+.practice-task-copy strong { color: #eef0e7; font-size: 14px; font-weight: 600; }
+.practice-task-copy small { color: #a9b6aa; font-size: 11px; line-height: 1.4; }
+.practice-check-row.checked .practice-task-copy small { color: var(--gold-bright); }
+.practice-task-state { color: var(--gold-bright); font-size: 11px; font-weight: 700; }
+.practice-check-row.checked .practice-check {
+  border-color: #3d9c63;
+  background: #3d9c63;
+  color: #fff;
 }
 .practice-stimulus-icon {
   flex: 0 0 25px;
@@ -382,8 +421,9 @@
 .practice-check {
   display: grid;
   place-items: center;
-  width: 25px;
-  height: 25px;
+  flex: 0 0 23px;
+  width: 23px;
+  height: 23px;
   border: 1px solid rgba(236, 239, 222, 0.32);
   border-radius: 7px;
   color: var(--ink-strong);
@@ -391,8 +431,9 @@
   font-style: normal;
 }
 .practice-check.checked {
-  border-color: var(--gold);
-  background: var(--gold);
+  border-color: #3d9c63;
+  background: #3d9c63;
+  color: #fff;
 }
 .practice-day-card .error-message,
 .creation-card .error-message {
@@ -402,6 +443,130 @@
 .practice-page-grid .practice-calendar-card {
   margin: 0;
 }
+.practice-month-heading {
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 0 auto 18px;
+  padding: 5px 10px;
+  border: 1px solid rgba(var(--gold-rgb), 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+}
+.practice-month-heading h2 {
+  min-width: 145px;
+  margin: 0;
+  color: #f5f4eb;
+  font-size: 14px;
+  text-align: center;
+  text-transform: capitalize;
+}
+.practice-month-heading button {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--gold-bright);
+  font-size: 21px;
+  cursor: pointer;
+}
+.practice-month-heading button:disabled { opacity: 0.3; cursor: default; }
+.practice-month-weekdays,
+.practice-month-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 7px;
+}
+.practice-month-weekdays { margin-bottom: 7px; }
+.practice-month-weekdays span {
+  color: #9eafa1;
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+}
+.practice-month-day,
+.practice-month-empty {
+  min-width: 0;
+  min-height: 72px;
+}
+.practice-month-day {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 3px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.055);
+  color: #c4cec4;
+  cursor: pointer;
+  transition: background 150ms ease, border-color 150ms ease, transform 150ms ease;
+}
+.practice-month-day:hover:not(:disabled) { transform: translateY(-2px); border-color: rgba(var(--gold-rgb), 0.35); }
+.practice-month-day-number { font-size: 11px; line-height: 1; }
+.practice-month-status {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(151, 163, 153, 0.22);
+  color: #849186;
+  font-size: 17px;
+}
+.practice-month-day.partial .practice-month-status {
+  background: rgba(var(--gold-rgb), var(--practice-opacity));
+  color: var(--ink-strong);
+}
+.practice-month-day.complete .practice-month-status {
+  background: #38ae72;
+  color: white;
+}
+.practice-month-day.selected {
+  border-color: rgba(var(--gold-rgb), 0.75);
+  background: rgba(var(--gold-rgb), 0.11);
+}
+.practice-month-day.selected .practice-month-day-number { color: var(--gold-bright); font-weight: 800; }
+.practice-month-day.today .practice-month-day-number { text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: 3px; }
+.practice-month-day:disabled { opacity: 0.3; cursor: default; }
+.practice-month-legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 13px; }
+.practice-month-legend span { display: inline-flex; align-items: center; gap: 5px; color: #aab8ac; font-size: 10px; }
+.practice-month-legend i { width: 8px; height: 8px; border-radius: 50%; background: #849186; }
+.practice-month-legend i.partial { background: var(--gold); }
+.practice-month-legend i.complete { background: #38ae72; }
+.practice-streak-card {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: 18px;
+  padding: 14px;
+  border: 1px solid rgba(64, 184, 123, 0.2);
+  border-radius: 17px;
+  background: linear-gradient(115deg, rgba(70, 167, 103, 0.13), rgba(var(--gold-rgb), 0.1));
+}
+.practice-streak-flame {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  place-items: center;
+  border: 3px solid rgba(73, 187, 123, 0.56);
+  border-left-color: rgba(73, 187, 123, 0.15);
+  border-radius: 50%;
+  color: #55ca88;
+  font-size: 22px;
+}
+.practice-streak-copy { display: grid; min-width: 0; gap: 4px; }
+.practice-streak-copy strong { color: #ecf4e9; font-size: 13px; }
+.practice-streak-copy p { margin: 0; color: #b6c8b7; font-size: 11px; line-height: 1.4; }
+.practice-streak-copy small { color: var(--gold-bright); font-size: 10px; }
 .practice-page-grid .practice-check-row {
   align-items: center;
 }

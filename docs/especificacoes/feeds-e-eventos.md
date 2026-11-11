@@ -52,6 +52,7 @@
 ### Edição, cancelamento e lembretes
 
 - Quem criou, o Taityo e pessoas autorizadas para o evento podem editá-lo ou cancelá-lo.
+- A publicação de uma nova atividade gera uma notificação somente para o público-alvo definido, mesmo quando a atividade estiver visível para toda a sede.
 - Alterações de horário, público e cancelamentos notificam todo o público-alvo e quem já respondeu à presença.
 - Lembretes automáticos são enviados 24 horas e 1 hora antes para o público-alvo.
 
@@ -66,7 +67,14 @@
 
 ## Notificações
 
-As notificações do MVP aparecem dentro do app e podem ser enviadas por push se a pessoa permitir. Isso se aplica a lembretes de evento, mudanças de eventos, interações em publicações e às notificações de transferência descritas na especificação correspondente.
+As notificações do MVP aparecem dentro do app e podem ser enviadas por push se a pessoa permitir. Isso se aplica a:
+
+- publicação de uma nova atividade, para o público-alvo do evento;
+- alterações ou cancelamento do evento, para todo o público-alvo e quem já respondeu à presença;
+- lembretes de evento, 24 horas e 1 hora antes, para o público-alvo;
+- curtidas e comentários nas publicações da pessoa;
+- notificações de transferência descritas em [transferencia-dojotai.md](transferencia-dojotai.md);
+- lembrete diário para registrar práticas, conforme a regra em [praticas-e-podios.md](praticas-e-podios.md).
 
 ## Pendências
 

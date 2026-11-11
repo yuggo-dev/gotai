@@ -51,7 +51,8 @@ function AppRoutes() {
           />
           <Route path="/social" element={<Navigate to="/" replace />} />
           <Route path="/avisos" element={<InformationalPage />} />
-          <Route path="/atividades" element={<ActivitiesPage />} />
+          <Route path="/agenda" element={<ActivitiesPage />} />
+          <Route path="/atividades" element={<Navigate to="/agenda" replace />} />
           <Route
             path="/praticas"
             element={<Navigate to="/perfil/desempenho?registrar=1" replace />}

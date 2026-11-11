@@ -12,11 +12,11 @@ Entregar uma comunidade digital de um Dojotai que permita entrada aprovada, perf
 2. Perfil com dados básicos e visibilidade controlada para informações sensíveis.
 3. Feed social com texto, fotos, áudio e vídeo combináveis, curtidas e comentários.
 4. Feed de informações com avisos e eventos que podem combinar texto, fotos, áudio e vídeo, publicados por pessoas autorizadas.
-5. Registro diário de práticas, histórico com permissões, streaks e pódios semanais e mensais.
+5. Registro diário de práticas, histórico com permissões, streaks, pódios semanais e mensais e sugestões de metas individuais.
 6. Eventos com público-alvo, visibilidade, respostas de presença, registro de comparecimento e lembretes.
 7. Organograma do Dojotai configurável por pessoas autorizadas pelo Taityo.
 8. Publicação social com referência opcional a uma prática que a própria pessoa registrou e escolheu compartilhar.
-9. Notificações dentro do app e push quando a pessoa permitir.
+9. Notificações dentro do app e push quando a pessoa permitir, incluindo avisos de atividades para o público-alvo e lembretes diários de práticas às 20h locais.
 
 ## Escopo a confirmar
 
