@@ -8,11 +8,39 @@
   text-rendering: optimizeLegibility;
   --green: #174b35;
   --green-deep: #123b2c;
+  --green-card: #194e37;
+  --green-card-deep: #123d2c;
+  --green-mid: #315d44;
+  --green-shadow: #103b2a;
+  --green-media: #0e3326;
+  --green-input: #0e3c2b;
+  --green-rgb: 23, 75, 53;
+  --green-input-rgb: 14, 60, 43;
+  --surface-nav-rgb: 10, 37, 27;
+  --surface-overlay-rgb: 4, 27, 18;
+  --surface-overlay-strong-rgb: 5, 29, 20;
+  --backdrop-rgb: 3, 17, 12;
+  --green-shadow-rgb: 3, 25, 17;
   --gold: #d5b14f;
+  --gold-bright: #f1d66f;
+  --gold-light: #f1d978;
+  --gold-muted: #a38532;
+  --gold-dim: #ba9635;
+  --gold-rgb: 213, 177, 79;
+  --gold-bright-rgb: 241, 214, 111;
   --cream: #f7f6f0;
   --ink: #213a2e;
+  --ink-strong: #173c2b;
   --muted: #6d7a70;
   --line: #e3e6dc;
+  --gradient-start: #061d15;
+  --gradient-deep: #0b2d20;
+  --gradient-mid: #123b2c;
+  --gradient-green: #174b35;
+  --gradient-end: #082319;
+  --green-deep-rgb: 18, 59, 44;
+  --green-card-deep-rgb: 13, 48, 34;
+  --tile-shadow-rgb: 3, 28, 19;
 }
 
 @keyframes app-green-gradient-drift {
@@ -61,11 +89,11 @@ button:disabled {
   flex-direction: column;
   background: linear-gradient(
     125deg,
-    #061d15 0%,
-    #0b2d20 28%,
-    #123b2c 52%,
-    #174b35 76%,
-    #082319 100%
+    var(--gradient-start) 0%,
+    var(--gradient-deep) 28%,
+    var(--gradient-mid) 52%,
+    var(--gradient-green) 76%,
+    var(--gradient-end) 100%
   );
   background-size: 300% 300%;
   animation: app-green-gradient-drift 28s ease-in-out infinite;
@@ -101,7 +129,7 @@ button:disabled {
   object-fit: contain;
 }
 .brand-accent {
-  color: #ba9635;
+  color: var(--gold-dim);
 }
 .topnav {
   display: flex;
@@ -156,7 +184,7 @@ button:disabled {
   letter-spacing: 0.15em;
   font-size: 10px;
   font-weight: 700;
-  color: #a38532;
+  color: var(--gold-muted);
 }
 h1,
 h2,
@@ -221,7 +249,7 @@ h3 {
 .button-primary {
   background: var(--green);
   color: #fffdf6;
-  box-shadow: 0 6px 16px rgba(23, 75, 53, 0.13);
+  box-shadow: 0 6px 16px rgba(var(--green-rgb), 0.13);
 }
 .button-primary:hover {
   background: var(--green-deep);
@@ -329,7 +357,7 @@ h3 {
 .field select:focus,
 .inline-form input:focus {
   border-color: #8da995;
-  box-shadow: 0 0 0 3px rgba(23, 75, 53, 0.08);
+  box-shadow: 0 0 0 3px rgba(var(--green-rgb), 0.08);
 }
 .field textarea {
   resize: vertical;
@@ -349,11 +377,11 @@ h3 {
 }
 .username-input:focus-within {
   border-color: #8da995;
-  box-shadow: 0 0 0 3px rgba(23, 75, 53, 0.08);
+  box-shadow: 0 0 0 3px rgba(var(--green-rgb), 0.08);
 }
 .username-input span {
   padding-left: 12px;
-  color: #a38532;
+  color: var(--gold-muted);
 }
 .username-input input {
   border: 0;
@@ -529,7 +557,7 @@ h3 {
   color: var(--muted);
 }
 .profile-handle {
-  color: #a38532 !important;
+  color: var(--gold-muted) !important;
   font-weight: 700;
 }
 

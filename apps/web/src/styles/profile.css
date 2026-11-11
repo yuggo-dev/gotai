@@ -6,8 +6,12 @@
   border: 1px solid rgba(236, 239, 222, 0.14);
   border-radius: 18px;
   background:
-    radial-gradient(ellipse at 88% 78%, rgba(213, 177, 79, 0.12), transparent 34%),
-    linear-gradient(125deg, rgba(18, 59, 44, 0.92), rgba(13, 48, 34, 0.78));
+    radial-gradient(ellipse at 88% 78%, rgba(var(--gold-rgb), 0.12), transparent 34%),
+    linear-gradient(
+      125deg,
+      rgba(var(--green-deep-rgb), 0.92),
+      rgba(var(--green-card-deep-rgb), 0.78)
+    );
 }
 .profile-page {
   display: grid;
@@ -31,7 +35,7 @@
   padding: 20px;
   border: 1px solid rgba(236, 239, 222, 0.14);
   border-radius: 14px;
-  background: #174b35;
+  background: var(--green);
 }
 .profile-page .publications-section {
   grid-area: pubs;
@@ -80,15 +84,13 @@
   flex-wrap: wrap;
   gap: 7px;
   margin: 0 0 9px;
-  color: #e2c24f;
+  color: var(--gold);
   font-size: 13px;
   font-weight: 700;
 }
 .profile-role-separator,
 .profile-role {
   color: #c1d0c2;
-}
-.profile-role {
   font-weight: 600;
 }
 .profile-description {
@@ -121,8 +123,6 @@
 }
 .section-title-row .field {
   min-width: 180px;
-}
-.section-title-row .field {
   color: #d4ded3;
 }
 .profile-details-link {
@@ -130,10 +130,10 @@
   align-items: center;
   gap: 8px;
   padding: 9px 11px;
-  border: 1px solid rgba(213, 177, 79, 0.55);
+  border: 1px solid rgba(var(--gold-rgb), 0.55);
   border-radius: 10px;
-  background: rgba(213, 177, 79, 0.12);
-  color: #f1d66f;
+  background: rgba(var(--gold-rgb), 0.12);
+  color: var(--gold-bright);
   font-size: 12px;
   font-weight: 700;
   transition:
@@ -142,67 +142,14 @@
 }
 .profile-details-link:hover {
   transform: translateY(-1px);
-  background: rgba(213, 177, 79, 0.2);
+  background: rgba(var(--gold-rgb), 0.2);
 }
 .section-title-row select {
   border: 1px solid rgba(236, 239, 222, 0.24);
   border-radius: 8px;
-  background: #174b35;
+  background: var(--green);
   padding: 8px 10px;
   color: #fffdf6;
-}
-.practice-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.practice-row-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-  margin-bottom: 9px;
-  color: #f0f0e6;
-  font-size: 12px;
-}
-.practice-toggle {
-  border: 1px solid rgba(236, 239, 222, 0.24);
-  border-radius: 7px;
-  padding: 7px 10px;
-  background: #174b35;
-  color: #fffdf6;
-  font-size: 10px;
-  font-weight: 700;
-}
-.practice-toggle.done {
-  border-color: #d5b14f;
-  background: #d5b14f;
-  color: #173c2b;
-}
-.practice-heatmap {
-  display: flex;
-  gap: 6px;
-}
-.practice-cell {
-  display: block;
-  flex: 0 0 19px;
-  width: 19px;
-  height: 19px;
-  color: rgba(195, 211, 193, 0.32);
-  transition:
-    color 180ms ease,
-    filter 180ms ease,
-    transform 180ms ease;
-}
-.practice-cell.filled {
-  color: #f1cf58;
-  filter: drop-shadow(0 0 4px rgba(241, 207, 88, 0.55));
-  transform: scale(1.08);
-}
-.heatmap-caption {
-  margin: 12px 0 0;
-  color: #acbbae;
-  font-size: 10px;
 }
 .publications-section h2 {
   margin-bottom: 14px;
@@ -240,45 +187,6 @@
 .profile-edit-form input[type="file"] {
   color: #e1e8df;
 }
-.profile-practice-summary {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-.summary-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  color: #e7eadf;
-  font-size: 13px;
-}
-.practice-summary-label {
-  display: flex;
-  min-width: 0;
-  align-items: center;
-  gap: 10px;
-}
-.practice-summary-label .practice-stimulus-icon {
-  width: 22px;
-  height: 22px;
-  flex-basis: 22px;
-}
-.practice-heatmap {
-  gap: 7px;
-}
-.practice-cell {
-  flex-basis: 22px;
-  width: 22px;
-  height: 22px;
-}
-.practice-calendar-card {
-  margin-bottom: 16px;
-}
-
-.profile-page {
-  row-gap: 0;
-}
 .profile-page .profile-practices-section {
   align-self: start;
 }
@@ -289,7 +197,7 @@
   min-width: 0;
   overflow-x: auto;
   padding: 2px 2px 7px;
-  scrollbar-color: rgba(213, 177, 79, 0.5) transparent;
+  scrollbar-color: rgba(var(--gold-rgb), 0.5) transparent;
   scrollbar-width: thin;
 }
 .practice-day-tile {
@@ -301,7 +209,11 @@
   padding: 11px 7px 9px;
   border: 1px solid rgba(236, 239, 222, 0.1);
   border-radius: 15px;
-  background: linear-gradient(155deg, rgba(255, 255, 255, 0.055), rgba(3, 28, 19, 0.2));
+  background: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.055),
+    rgba(var(--tile-shadow-rgb), 0.2)
+  );
   text-align: center;
 }
 .practice-day-date {
@@ -340,9 +252,9 @@
   height: 17px;
 }
 .practice-day-indicator.completed {
-  background: rgba(213, 177, 79, 0.15);
+  background: rgba(var(--gold-rgb), 0.15);
   color: #f1cf58;
-  filter: drop-shadow(0 0 5px rgba(241, 207, 88, 0.35));
+  filter: drop-shadow(0 0 5px rgba(var(--gold-bright-rgb), 0.35));
 }
 .practice-day-count {
   color: #aebfae;

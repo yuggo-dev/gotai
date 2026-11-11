@@ -70,7 +70,7 @@
     position: sticky; z-index: 12; top: 0; display: flex; height: 58px;
     align-items: center; justify-content: center; padding: 4px 15px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(10, 37, 27, 0.72); backdrop-filter: blur(16px);
+    background: rgba(var(--surface-nav-rgb), 0.72); backdrop-filter: blur(16px);
   }
   .member-mobile-topbar > a { position: absolute; left: 50%; transform: translateX(-50%); }
   .member-mobile-topbar > button { position: absolute; left: 15px; z-index: 1; }
@@ -87,7 +87,7 @@
     grid-template-columns: minmax(0, 1fr) 58px minmax(0, 1fr); align-items: center;
     gap: 8px; padding: 8px 12px max(10px, env(safe-area-inset-bottom));
     border-top: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(10, 37, 27, 0.72); backdrop-filter: blur(16px);
+    background: rgba(var(--surface-nav-rgb), 0.72); backdrop-filter: blur(16px);
     box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.16);
   }
   .profile-hero { align-items: flex-start; flex-wrap: wrap; gap: 14px; }
@@ -108,7 +108,7 @@
   }
   .creation-modal-header { gap: 12px; }
   .creation-modal-header h2 { font-size: 20px; }
-  .creation-modal-actions { position: sticky; bottom: -16px; background: #123b2c; padding: 12px 0 2px; }
+  .creation-modal-actions { position: sticky; bottom: -16px; background: var(--green-deep); padding: 12px 0 2px; }
   .creation-modal-actions .button { flex: 1; }
   .post-composer { padding: 12px; }
   .post-composer .composer-top { gap: 10px; }
@@ -180,40 +180,8 @@
   .practice-page-grid .practice-calendar-card, .practice-page-grid .practice-day-card { height: auto; }
   .practice-calendar-card, .practice-day-card { padding: 16px; }
   .performance-date-heading { align-items: flex-start; }
-  .practice-timeline-card { align-items: flex-start; flex-direction: column; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .app-shell, .member-shell, .public-home-shell { animation: none; background-position: 50% 50%; }
-}
-
-.member-content:not(.social-page) {
-  font-size: 15px;
-}
-.member-content:not(.social-page) .field {
-  font-size: 11px;
-}
-.member-content:not(.social-page) .field input,
-.member-content:not(.social-page) .field textarea,
-.member-content:not(.social-page) .field select {
-  padding: 9px 10px;
-  font-size: 12px;
-}
-.member-content:not(.social-page) .button:not(.edit-profile-button) {
-  padding-block: 10px;
-  font-size: 12px;
-}
-.member-content:not(.social-page) .section-title-row h2 {
-  font-size: 19px;
-}
-.member-content:not(.social-page) .creation-modal-header h2 {
-  font-size: 21px;
-}
-.member-content:not(.social-page) .creation-card:not(.creation-modal),
-.member-content:not(.social-page) .content-card:not(.info-post) {
-  padding: 18px;
-}
-.member-content:not(.social-page) .social-post .button {
-  padding: 9px 12px;
-  font-size: 11px;
 }

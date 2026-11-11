@@ -2,18 +2,18 @@
 .public-home-shell {
   background: linear-gradient(
     125deg,
-    #061d15 0%,
-    #0b2d20 28%,
-    #123b2c 52%,
-    #174b35 76%,
-    #082319 100%
+    var(--gradient-start) 0%,
+    var(--gradient-deep) 28%,
+    var(--gradient-mid) 52%,
+    var(--gradient-green) 76%,
+    var(--gradient-end) 100%
   );
   background-size: 300% 300%;
   animation: app-green-gradient-drift 28s ease-in-out infinite;
   color: #f5f3e9;
 }
 .public-home-shell .topbar {
-  background: rgba(10, 37, 27, 0.7);
+  background: rgba(var(--surface-nav-rgb), 0.7);
   backdrop-filter: blur(16px);
   border-bottom-color: rgba(255, 255, 255, 0.1);
 }
@@ -28,7 +28,7 @@
   color: #fffdf6;
 }
 .public-home-shell .hero-copy .eyebrow {
-  color: #e6c94e;
+  color: var(--gold);
 }
 .public-home-shell .hero-copy .lead {
   color: #c7d2c7;
@@ -37,8 +37,8 @@
   color: #d1dacd;
 }
 .public-home-shell .hero-actions .button-primary {
-  background: #d5b14f;
-  color: #173c2b;
+  background: var(--gold);
+  color: var(--ink-strong);
 }
 .public-home-shell .hero-mark {
   color: #c1cbbc;

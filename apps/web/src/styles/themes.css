@@ -1,0 +1,83 @@
+html[data-theme="azul"] {
+  color-scheme: dark;
+  --green: #17446c;
+  --green-deep: #0d2948;
+  --green-card: #194b76;
+  --green-card-deep: #123954;
+  --green-mid: #23547d;
+  --green-shadow: #0d3151;
+  --green-media: #0a2945;
+  --green-input: #0b2a49;
+  --green-rgb: 23, 68, 108;
+  --green-input-rgb: 11, 42, 73;
+  --surface-nav-rgb: 5, 18, 35;
+  --surface-overlay-rgb: 8, 36, 60;
+  --surface-overlay-strong-rgb: 7, 31, 52;
+  --backdrop-rgb: 2, 8, 18;
+  --green-shadow-rgb: 3, 16, 30;
+  --gold: #d5b14f;
+  --gold-bright: #f1d66f;
+  --gold-light: #f1d978;
+  --gold-muted: #a38532;
+  --gold-dim: #ba9635;
+  --gold-rgb: 213, 177, 79;
+  --gold-bright-rgb: 241, 214, 111;
+  --cream: #eaf3ff;
+  --ink: #152a40;
+  --ink-strong: #09213a;
+  --muted: #96abc2;
+  --line: #304b68;
+  --gradient-start: #050d19;
+  --gradient-deep: #0a1d35;
+  --gradient-mid: #12365a;
+  --gradient-green: #17446c;
+  --gradient-end: #071323;
+  --green-deep-rgb: 10, 29, 53;
+  --green-card-deep-rgb: 17, 48, 77;
+  --tile-shadow-rgb: 3, 13, 28;
+}
+
+html[data-theme="azul"] .member-sidebar,
+html[data-theme="azul"] .desktop-feedbar,
+html[data-theme="azul"] .mobile-feedbar,
+html[data-theme="azul"] .member-mobile-topbar,
+html[data-theme="azul"] .public-home-shell .topbar {
+  background-color: rgba(var(--surface-nav-rgb), 0.84);
+}
+
+html[data-theme="azul"] .member-content .content-card.info-post {
+  background: linear-gradient(135deg, var(--green-card), var(--green-card-deep));
+}
+
+html[data-theme="azul"] .member-content .practice-day-tile {
+  border-color: rgba(var(--gold-rgb), 0.24);
+}
+
+html[data-theme="azul"] .desktop-feed-link.active,
+html[data-theme="azul"] .mobile-feed-link.active,
+html[data-theme="azul"] .member-content .practice-toggle.done,
+html[data-theme="azul"] .member-content .performance-week-strip button.selected {
+  border-color: var(--gold);
+  background: var(--gold);
+  color: var(--ink-strong);
+}
+
+html[data-theme="azul"] .member-content .performance-week-strip button.selected > span,
+html[data-theme="azul"] .member-content .performance-week-strip button.selected > strong {
+  color: var(--ink-strong);
+}
+
+html[data-theme="azul"] .member-content .practice-todo-item.completed .practice-todo-icon,
+html[data-theme="azul"] .member-content .practice-encouragement {
+  color: var(--gold-bright);
+}
+
+html[data-theme="azul"] .member-content .practice-day-indicator.completed {
+  color: var(--gold-bright);
+}
+
+html[data-theme="azul"] .theme-picker select {
+  border-color: rgba(var(--gold-rgb), 0.3);
+  background: rgba(8, 28, 49, 0.9);
+  color: #eaf3ff;
+}

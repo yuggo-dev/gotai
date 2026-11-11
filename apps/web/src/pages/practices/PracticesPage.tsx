@@ -1,9 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
-import {
-  RiArrowLeftSLine,
-  RiArrowRightSLine,
-} from "react-icons/ri";
+import { useSearchParams } from "react-router-dom";
 import { api } from "../../lib/api";
 import { useAuth } from "../../app/auth";
 import { HomePage } from "../public/HomePage";
@@ -85,6 +81,29 @@ export function PracticesPage() {
     date.setUTCDate(weekStart.getUTCDate() + index);
     return date.toISOString().slice(0, 10);
   });
+  const currentWeekStart = (() => {
+    const current = new Date(`${today || localDate()}T12:00:00Z`);
+    current.setUTCDate(current.getUTCDate() - ((current.getUTCDay() + 6) % 7));
+    return current.toISOString().slice(0, 10);
+  })();
+  const earliestLogDate = logs.reduce(
+    (earliest, log) => (log.date < earliest ? log.date : earliest),
+    addDays(today || localDate(), -70),
+  );
+  const firstWeekStart = new Date(`${earliestLogDate}T12:00:00Z`);
+  firstWeekStart.setUTCDate(
+    firstWeekStart.getUTCDate() - ((firstWeekStart.getUTCDay() + 6) % 7),
+  );
+  const weekOptions: string[] = [];
+  for (
+    const week = new Date(firstWeekStart);
+    week.toISOString().slice(0, 10) <= currentWeekStart;
+    week.setUTCDate(week.getUTCDate() + 7)
+  ) {
+    weekOptions.push(week.toISOString().slice(0, 10));
+  }
+  weekOptions.reverse();
+  const selectedWeekStart = weekStart.toISOString().slice(0, 10);
   const editable = (date: string) =>
     Boolean(today && date <= today && date >= addDays(today, -2));
   async function togglePractice(practiceKey: string) {
@@ -108,9 +127,6 @@ export function PracticesPage() {
       setError((e as Error).message);
     }
   }
-  function shiftWeek(amount: number) {
-    if (selectedDate) setSelectedDate(addDays(selectedDate, amount * 7));
-  }
   function closeRegistration() {
     setRegisterOpen(false);
     setSearchParams({}, { replace: true });
@@ -118,11 +134,18 @@ export function PracticesPage() {
   return (
     <section className="member-content practice-page">
       <div className="content-heading">
-        <div>
-          <h1>Práticas</h1>
-          <Link to="/perfil" className="text-link practice-back-link">
-            ← Voltar ao perfil
-          </Link>
+        <div className="practice-page-title">
+          <div className="practice-page-avatar" aria-hidden="true">
+            {session.user.avatarUrl ? (
+              <img src={session.user.avatarUrl} alt="" />
+            ) : (
+              session.user.fullName.trim().charAt(0).toUpperCase()
+            )}
+          </div>
+          <div>
+            <h1>Minhas Práticas</h1>
+            <p>{session.user.fullName}</p>
+          </div>
         </div>
       </div>
       <div className="practice-page-grid history-mode">
@@ -142,22 +165,38 @@ export function PracticesPage() {
                     : formatLongDate(selectedDate)}
                 </h2>
               </div>
-              <div className="performance-week-controls">
-                <button
-                  onClick={() => shiftWeek(-1)}
-                  aria-label="Semana anterior"
-                >
-                  <RiArrowLeftSLine aria-hidden="true" />
-                </button>
-                <button
-                  onClick={() => shiftWeek(1)}
-                  aria-label="Próxima semana"
-                  disabled={weekDays[6] >= today}
-                >
-                  <RiArrowRightSLine aria-hidden="true" />
-                </button>
-              </div>
             </div>
+            <label className="performance-week-select">
+              <span>Semana</span>
+              <select
+                value={selectedWeekStart}
+                aria-label="Selecionar semana"
+                onChange={(event) => {
+                  const nextWeekStart = event.target.value;
+                  const nextWeekEnd = addDays(nextWeekStart, 6);
+                  setSelectedDate((current) =>
+                    current >= nextWeekStart && current <= nextWeekEnd
+                      ? current
+                      : nextWeekStart,
+                  );
+                }}
+              >
+                {weekOptions.map((weekStartDate) => {
+                  const weekEndDate = addDays(weekStartDate, 6);
+                  const endLabel = new Intl.DateTimeFormat("pt-BR", {
+                    day: "2-digit",
+                    month: "short",
+                    timeZone: "UTC",
+                  }).format(new Date(`${weekEndDate}T12:00:00Z`));
+
+                  return (
+                    <option key={weekStartDate} value={weekStartDate}>
+                      {formatDay(weekStartDate)} – {endLabel}
+                    </option>
+                  );
+                })}
+              </select>
+            </label>
             <div
               className="performance-week-strip"
               aria-label="Dias da semana"
@@ -197,8 +236,11 @@ export function PracticesPage() {
           </div>
           {loadingPractices ? (
             <p className="muted">Carregando práticas…</p>
-          ) : selectedDate === today ? (
-            <ul className="practice-todo-list" aria-label="Práticas de hoje">
+          ) : (
+            <ul
+              className="practice-todo-list"
+              aria-label={`Práticas de ${formatLongDate(selectedDate)}`}
+            >
               {Object.entries(practiceNames).map(([key, label]) => {
                 const PracticeIcon = practiceIcons[key];
                 const done = logs.some(
@@ -210,7 +252,7 @@ export function PracticesPage() {
                     className={
                       done
                         ? "practice-todo-item completed"
-                        : "practice-todo-item"
+                        : "practice-todo-item pending"
                     }
                     key={key}
                   >
@@ -223,49 +265,16 @@ export function PracticesPage() {
                     <span
                       className={
                         done
-                          ? "practice-todo-check completed"
-                          : "practice-todo-check"
+                          ? "practice-todo-status completed"
+                          : "practice-todo-status"
                       }
-                      role="img"
-                      aria-label={done ? "Realizada" : "Não realizada"}
                     >
-                      {done ? "✓" : ""}
+                      {done ? "Realizada" : "Não registrada"}
                     </span>
                   </li>
                 );
               })}
             </ul>
-          ) : (
-            <div className="practice-timeline">
-              {Object.entries(practiceNames)
-                .filter(([key]) =>
-                  logs.some(
-                    (log) => log.practiceKey === key && log.date === selectedDate,
-                  ),
-                )
-                .map(([key, label]) => {
-                const PracticeIcon = practiceIcons[key];
-                return (
-                  <article className="practice-timeline-entry" key={key}>
-                    <span className="practice-timeline-marker">
-                      <PracticeIcon aria-hidden="true" />
-                    </span>
-                    <div className="practice-timeline-card">
-                      <div>
-                        <h3>{label}</h3>
-                        <p>Prática registrada</p>
-                      </div>
-                      <span className="practice-status done">Concluída</span>
-                    </div>
-                  </article>
-                );
-              })}
-              {!logs.some((log) => log.date === selectedDate) && (
-                <p className="practice-timeline-empty">
-                  Nenhuma prática registrada neste dia.
-                </p>
-              )}
-            </div>
           )}
           {error && <ErrorMessage>{error}</ErrorMessage>}
         </section>

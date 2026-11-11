@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   RiChatSmile3Line,
-  RiHandHeartFill,
   RiLogoutBoxRLine,
   RiMegaphoneFill,
   RiMenuLine,
@@ -10,8 +9,16 @@ import {
   RiSettings3Line,
   RiUser3Line,
 } from "react-icons/ri";
+import { MdWavingHand } from "react-icons/md";
 import type { IconType } from "react-icons";
 import { useAuth } from "../app/auth";
+
+type AppTheme = "verde" | "azul";
+
+function getSavedTheme(): AppTheme {
+  const saved = localStorage.getItem("gotai-theme");
+  return saved === "azul" ? saved : "verde";
+}
 
 const feedLinks = [
   { to: "/", label: "Avisos", icon: RiMegaphoneFill },
@@ -30,7 +37,12 @@ export function MemberNavigation() {
   const location = useLocation();
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [theme, setTheme] = useState<AppTheme>(getSavedTheme);
   const closeDrawer = () => setDrawerOpen(false);
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem("gotai-theme", theme);
+  }, [theme]);
   return (
     <>
       <div className="member-mobile-topbar">
@@ -91,6 +103,17 @@ export function MemberNavigation() {
           ))}
         </nav>
         <div className="sidebar-utilities">
+          <label className="theme-picker" htmlFor="gotai-theme-select">
+            <span>Tema de cores</span>
+            <select
+              id="gotai-theme-select"
+              value={theme}
+              onChange={(event) => setTheme(event.target.value as AppTheme)}
+            >
+              <option value="verde">Verde e dourado</option>
+              <option value="azul">Preto e azulado</option>
+            </select>
+          </label>
           {session?.membership?.roles.includes("Taityo") && (
             <Link
               to="/administracao"
@@ -154,7 +177,7 @@ export function MemberNavigation() {
           aria-label="Registrar práticas"
           title="Registrar práticas"
         >
-          <RiHandHeartFill aria-hidden="true" />
+          <MdWavingHand aria-hidden="true" />
         </Link>
         <Link
           to="/social"

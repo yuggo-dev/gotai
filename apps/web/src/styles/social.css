@@ -53,7 +53,7 @@
   width: 100%;
   max-height: 440px;
   border-radius: 9px;
-  background: #0e3326;
+  background: var(--green-media);
   object-fit: contain;
 }
 .post-media audio {
@@ -68,7 +68,7 @@
   padding: 10px 18px;
   border-top: 1px solid rgba(236, 239, 222, 0.12);
   border-bottom: 1px solid rgba(236, 239, 222, 0.1);
-  background: rgba(4, 27, 18, 0.17);
+  background: rgba(var(--surface-overlay-rgb), 0.17);
 }
 .post-action {
   display: inline-flex;
@@ -87,7 +87,7 @@
     color 0.16s ease;
 }
 .post-action > span:first-child {
-  color: #d9c36d;
+  color: var(--gold-bright);
   font-size: 17px;
 }
 .post-action strong {
@@ -104,7 +104,7 @@
 }
 .comments-panel {
   padding: 18px 22px 21px;
-  background: rgba(5, 29, 20, 0.18);
+  background: rgba(var(--surface-overlay-strong-rgb), 0.18);
 }
 .comments-panel h3 {
   display: flex;
@@ -123,8 +123,8 @@
   place-items: center;
   padding: 0 5px;
   border-radius: 20px;
-  background: rgba(213, 177, 79, 0.17);
-  color: #eed87c;
+  background: rgba(var(--gold-rgb), 0.17);
+  color: var(--gold-bright);
   font-size: 10px;
 }
 .comment-list {
@@ -145,8 +145,8 @@
   place-items: center;
   overflow: hidden;
   border-radius: 50%;
-  background: #315d44;
-  color: #f1dc83;
+  background: var(--green-mid);
+  color: var(--gold-bright);
   font-size: 12px;
   font-weight: 700;
 }
@@ -187,7 +187,7 @@
   resize: vertical;
   border: 1px solid rgba(236, 239, 222, 0.18);
   border-radius: 9px;
-  background: #103b2a;
+  background: var(--green-shadow);
   color: #fffdf6;
   font: inherit;
   font-size: 12px;
@@ -210,7 +210,7 @@
 .comment-own-actions button:hover,
 .comment-controls button:hover {
   background: rgba(255, 255, 255, 0.08);
-  color: #f0d978;
+  color: var(--gold-bright);
 }
 .comment-controls {
   display: flex;
@@ -238,7 +238,7 @@
   color: #a5b7a7;
 }
 .text-link {
-  color: #e5ca61;
+  color: var(--gold-bright);
   font-size: 11px;
   font-weight: 700;
 }
@@ -252,7 +252,7 @@
   margin-left: auto;
   padding: 0;
   border-radius: 50%;
-  color: #f1d66f;
+  color: var(--gold-bright);
   font-size: 18px;
 }
 .edit-profile-button svg {

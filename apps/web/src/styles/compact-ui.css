@@ -1,0 +1,38 @@
+/* Compact sizing for app pages; the social feed keeps its own scale. */
+.member-content:not(.social-page) {
+  font-size: 15px;
+}
+
+.member-content:not(.social-page) .field {
+  font-size: 11px;
+}
+
+.member-content:not(.social-page) .field input,
+.member-content:not(.social-page) .field textarea,
+.member-content:not(.social-page) .field select {
+  padding: 9px 10px;
+  font-size: 12px;
+}
+
+.member-content:not(.social-page) .button:not(.edit-profile-button) {
+  padding-block: 10px;
+  font-size: 12px;
+}
+
+.member-content:not(.social-page) .section-title-row h2 {
+  font-size: 19px;
+}
+
+.member-content:not(.social-page) .creation-modal-header h2 {
+  font-size: 21px;
+}
+
+.member-content:not(.social-page) .creation-card:not(.creation-modal),
+.member-content:not(.social-page) .content-card:not(.info-post) {
+  padding: 18px;
+}
+
+.member-content:not(.social-page) .social-post .button {
+  padding: 9px 12px;
+  font-size: 11px;
+}

@@ -6,7 +6,7 @@
   padding: 18px;
   border: 1px solid rgba(236, 239, 222, 0.14);
   border-radius: 13px;
-  background: #174b35;
+  background: var(--green);
 }
 .org-delegates h2 {
   margin: 0 0 6px;
@@ -32,7 +32,7 @@
   padding: 10px 12px;
   border: 1px solid rgba(236, 239, 222, 0.2);
   border-radius: 8px;
-  background: #0e3c2b;
+  background: var(--green-input);
   color: #fffdf6;
   font: inherit;
   font-size: 12px;
@@ -55,7 +55,7 @@
 .delegate-list button {
   border: 0;
   background: transparent;
-  color: #e8d374;
+  color: var(--gold-bright);
   font-size: 16px;
 }
 .org-tree {
@@ -79,7 +79,7 @@
   padding: 12px;
   border: 1px solid rgba(236, 239, 222, 0.16);
   border-radius: 11px;
-  background: #174b35;
+  background: var(--green);
 }
 .org-position-avatar {
   display: grid;
@@ -89,7 +89,7 @@
   height: 40px;
   overflow: hidden;
   border-radius: 50%;
-  background: rgba(213, 177, 79, 0.2);
+  background: rgba(var(--gold-rgb), 0.2);
   color: #f0d669;
   font-weight: 700;
 }
@@ -132,7 +132,7 @@
   border: 1px solid rgba(236, 239, 222, 0.18);
   border-radius: 7px;
   background: transparent;
-  color: #e8d374;
+  color: var(--gold-bright);
 }
 .org-position-children {
   display: flex;
@@ -140,7 +140,7 @@
   gap: 11px;
   margin: 11px 0 0 20px;
   padding-left: 22px;
-  border-left: 1px solid rgba(213, 177, 79, 0.56);
+  border-left: 1px solid rgba(var(--gold-rgb), 0.56);
 }
 .org-hint {
   margin: -5px 0 0;
@@ -149,6 +149,6 @@
 }
 .creation-card .field select {
   border-color: rgba(236, 239, 222, 0.2);
-  background: #0e3c2b;
+  background: var(--green-input);
   color: #fffdf6;
 }
