@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState, type FormEvent } from "react";
+import { useSearchParams } from "react-router-dom";
 import { api } from "../../lib/api";
 import { useAuth } from "../../app/auth";
 import { HomePage } from "../public/HomePage";
@@ -14,8 +15,16 @@ import { formatEventDate, formatTimestamp, formatTime } from "../../lib/format";
 
 export function InformationalPage() {
   const { session } = useAuth();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [data, setData] = useState<InfoFeedData>({ notices: [], events: [] });
-  const [formType, setFormType] = useState<"notice" | "event" | null>(null);
+  const [formType, setFormType] = useState<"notice" | "event" | null>(() => {
+    const requestedForm = searchParams.get("criar");
+    return requestedForm === "aviso"
+      ? "notice"
+      : requestedForm === "evento"
+        ? "event"
+        : null;
+  });
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState({ title: "", body: "" });
@@ -35,6 +44,7 @@ export function InformationalPage() {
         setFormType(null);
         setMedia([]);
         setError("");
+        setSearchParams({}, { replace: true });
       }
     };
     window.addEventListener("keydown", closeOnEscape);
@@ -42,7 +52,7 @@ export function InformationalPage() {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", closeOnEscape);
     };
-  }, [formType, busy]);
+  }, [formType, busy, setSearchParams]);
   const load = useCallback(async () => {
     try {
       setData(await api<InfoFeedData>("/api/informativo"));
@@ -67,6 +77,7 @@ export function InformationalPage() {
     setFormType(null);
     setMedia([]);
     setError("");
+    setSearchParams({}, { replace: true });
   }
   async function submit(eventForm: FormEvent) {
     eventForm.preventDefault();
@@ -94,6 +105,7 @@ export function InformationalPage() {
       setNotice({ title: "", body: "" });
       setEvent({ title: "", description: "", startsAt: "", location: "" });
       setMedia([]);
+      setSearchParams({}, { replace: true });
       await load();
     } catch (e) {
       setError((e as Error).message);

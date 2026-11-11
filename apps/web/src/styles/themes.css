@@ -81,3 +81,49 @@ html[data-theme="azul"] .theme-picker select {
   background: rgba(8, 28, 49, 0.9);
   color: #eaf3ff;
 }
+
+html[data-theme="preto"] {
+  color-scheme: dark;
+  --green: #191919;
+  --green-deep: #0d0d0d;
+  --green-card: #222222;
+  --green-card-deep: #151515;
+  --green-mid: #303030;
+  --green-shadow: #111111;
+  --green-media: #090909;
+  --green-input: #121212;
+  --green-rgb: 25, 25, 25;
+  --green-input-rgb: 18, 18, 18;
+  --surface-nav-rgb: 8, 8, 8;
+  --surface-overlay-rgb: 16, 16, 16;
+  --surface-overlay-strong-rgb: 10, 10, 10;
+  --backdrop-rgb: 0, 0, 0;
+  --green-shadow-rgb: 0, 0, 0;
+  --cream: #f3eee2;
+  --ink: #211b0e;
+  --ink-strong: #302407;
+  --muted: #aaa397;
+  --line: #403827;
+  --gradient-start: #030303;
+  --gradient-deep: #090909;
+  --gradient-mid: #151515;
+  --gradient-green: #202020;
+  --gradient-end: #050505;
+  --green-deep-rgb: 13, 13, 13;
+  --green-card-deep-rgb: 21, 21, 21;
+  --tile-shadow-rgb: 0, 0, 0;
+}
+
+html[data-theme="preto"] .member-sidebar,
+html[data-theme="preto"] .desktop-feedbar,
+html[data-theme="preto"] .mobile-feedbar,
+html[data-theme="preto"] .member-mobile-topbar,
+html[data-theme="preto"] .public-home-shell .topbar {
+  background-color: rgba(var(--surface-nav-rgb), 0.9);
+}
+
+html[data-theme="preto"] .theme-picker select {
+  border-color: rgba(var(--gold-rgb), 0.3);
+  background: #111;
+  color: #f3eee2;
+}

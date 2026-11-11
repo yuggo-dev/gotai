@@ -1,30 +1,31 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
-  RiChatSmile3Line,
+  RiCalendar2Line,
+  RiHome5Line,
   RiLogoutBoxRLine,
-  RiMegaphoneFill,
   RiMenuLine,
   RiNodeTree,
   RiSettings3Line,
   RiUser3Line,
 } from "react-icons/ri";
 import { MdWavingHand } from "react-icons/md";
+import { GiOrganigram } from "react-icons/gi";
 import type { IconType } from "react-icons";
 import { useAuth } from "../app/auth";
 
-type AppTheme = "verde" | "azul";
+type AppTheme = "verde" | "azul" | "preto";
 
 function getSavedTheme(): AppTheme {
   const saved = localStorage.getItem("gotai-theme");
-  return saved === "azul" ? saved : "verde";
+  return saved === "azul" || saved === "preto" ? saved : "verde";
 }
 
 const feedLinks = [
-  { to: "/", label: "Avisos", icon: RiMegaphoneFill },
-  { to: "/social", label: "Social", icon: RiChatSmile3Line },
+  { to: "/", label: "Início", icon: RiHome5Line },
 ];
 const sidebarLinks = [
+  { to: "/atividades", label: "Atividades", icon: RiCalendar2Line },
   { to: "/organograma", label: "Organograma", icon: RiNodeTree },
 ];
 
@@ -37,19 +38,40 @@ export function MemberNavigation() {
   const location = useLocation();
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [topBarHidden, setTopBarHidden] = useState(false);
   const [theme, setTheme] = useState<AppTheme>(getSavedTheme);
   const closeDrawer = () => setDrawerOpen(false);
+  useEffect(() => {
+    let previousScrollY = window.scrollY;
+    const updateTopBarVisibility = () => {
+      const currentScrollY = window.scrollY;
+      const scrollDelta = currentScrollY - previousScrollY;
+      if (Math.abs(scrollDelta) < 5) return;
+
+      if (currentScrollY < 48 || scrollDelta < 0) {
+        setTopBarHidden(false);
+      } else {
+        setTopBarHidden(true);
+      }
+      previousScrollY = currentScrollY;
+    };
+    window.addEventListener("scroll", updateTopBarVisibility, { passive: true });
+    return () => window.removeEventListener("scroll", updateTopBarVisibility);
+  }, []);
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     localStorage.setItem("gotai-theme", theme);
   }, [theme]);
+  useEffect(() => {
+    if (drawerOpen) setTopBarHidden(false);
+  }, [drawerOpen]);
   return (
     <>
-      <div className="member-mobile-topbar">
+      <div className={topBarHidden ? "member-mobile-topbar is-hidden" : "member-mobile-topbar"}>
         <button onClick={() => setDrawerOpen(true)} aria-label="Abrir menu">
           <RiMenuLine aria-hidden="true" />
         </button>
-        <Link to="/" aria-label="goTAI — Avisos">
+        <Link to="/" aria-label="goTAI — Início">
           <img src="/gotai.png" alt="goTAI" />
         </Link>
       </div>
@@ -112,6 +134,7 @@ export function MemberNavigation() {
             >
               <option value="verde">Verde e dourado</option>
               <option value="azul">Preto e azulado</option>
+              <option value="preto">Preto e dourado</option>
             </select>
           </label>
           {session?.membership?.roles.includes("Taityo") && (
@@ -137,7 +160,10 @@ export function MemberNavigation() {
           </button>
         </div>
       </aside>
-      <nav className="desktop-feedbar" aria-label="Feeds">
+      <nav
+        className={topBarHidden ? "desktop-feedbar is-hidden" : "desktop-feedbar"}
+        aria-label="Navegação principal"
+      >
         {feedLinks.map((item) => (
           <Link
             key={item.to}
@@ -156,20 +182,24 @@ export function MemberNavigation() {
           </Link>
         ))}
       </nav>
-      <nav className="mobile-feedbar" aria-label="Feeds">
+      <nav className="mobile-feedbar" aria-label="Navegação principal">
         <Link
           to="/"
           aria-current={location.pathname === "/" ? "page" : undefined}
-          className={
-            location.pathname === "/"
-              ? "mobile-feed-link active"
-              : "mobile-feed-link"
-          }
+          className={location.pathname === "/" ? "mobile-dock-link active" : "mobile-dock-link"}
+          aria-label="Início"
+          title="Início"
         >
-          <span>
-            <RiMegaphoneFill aria-hidden="true" />
-          </span>
-          Avisos
+          <RiHome5Line aria-hidden="true" />
+        </Link>
+        <Link
+          to="/atividades"
+          aria-current={location.pathname === "/atividades" ? "page" : undefined}
+          className={location.pathname === "/atividades" ? "mobile-dock-link active" : "mobile-dock-link"}
+          aria-label="Calendário de atividades"
+          title="Atividades"
+        >
+          <RiCalendar2Line aria-hidden="true" />
         </Link>
         <Link
           to="/perfil/desempenho?registrar=1"
@@ -180,18 +210,28 @@ export function MemberNavigation() {
           <MdWavingHand aria-hidden="true" />
         </Link>
         <Link
-          to="/social"
-          aria-current={location.pathname === "/social" ? "page" : undefined}
-          className={
-            location.pathname === "/social"
-              ? "mobile-feed-link active"
-              : "mobile-feed-link"
-          }
+          to="/organograma"
+          aria-current={location.pathname === "/organograma" ? "page" : undefined}
+          className={location.pathname === "/organograma" ? "mobile-dock-link active" : "mobile-dock-link"}
+          aria-label="Organograma"
+          title="Organograma"
         >
-          <span>
-            <RiChatSmile3Line aria-hidden="true" />
+          <GiOrganigram aria-hidden="true" />
+        </Link>
+        <Link
+          to="/perfil"
+          aria-current={location.pathname === "/perfil" ? "page" : undefined}
+          className={location.pathname === "/perfil" ? "mobile-dock-link active" : "mobile-dock-link"}
+          aria-label="Meu perfil"
+          title="Meu perfil"
+        >
+          <span className="mobile-dock-avatar">
+            {session?.user.avatarUrl ? (
+              <img src={session.user.avatarUrl} alt="" />
+            ) : (
+              <RiUser3Line aria-hidden="true" />
+            )}
           </span>
-          Social
         </Link>
       </nav>
     </>

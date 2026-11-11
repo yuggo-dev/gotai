@@ -187,9 +187,16 @@
   background: rgba(var(--surface-nav-rgb), 0.72);
   backdrop-filter: blur(16px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transition: transform 220ms ease;
+}
+.desktop-feedbar.is-hidden,
+.member-mobile-topbar.is-hidden {
+  transform: translateY(-110%);
+  pointer-events: none;
 }
 .member-mobile-topbar {
   display: none;
+  transition: transform 220ms ease;
 }
 .member-mobile-topbar img {
   display: block;

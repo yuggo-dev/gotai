@@ -9,6 +9,7 @@ import { SocialPage } from "./pages/social/SocialPage";
 import { PracticesPage } from "./pages/practices/PracticesPage";
 import { ProfilePage } from "./pages/profile/ProfilePage";
 import { OrganogramPage } from "./pages/organogram/OrganogramPage";
+import { ActivitiesPage } from "./pages/activities/ActivitiesPage";
 
 export default function App() {
   return (
@@ -46,9 +47,11 @@ function AppRoutes() {
         <Routes>
           <Route
             path="/"
-            element={isMember ? <InformationalPage /> : <HomePage />}
+            element={isMember ? <SocialPage /> : <HomePage />}
           />
-          <Route path="/social" element={<SocialPage />} />
+          <Route path="/social" element={<Navigate to="/" replace />} />
+          <Route path="/avisos" element={<InformationalPage />} />
+          <Route path="/atividades" element={<ActivitiesPage />} />
           <Route
             path="/praticas"
             element={<Navigate to="/perfil/desempenho?registrar=1" replace />}
